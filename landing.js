@@ -40,7 +40,7 @@ function inicializarRevelacionesScroll() {
   }, { threshold: 0.12, rootMargin: "0px 0px -20% 0px" });
 
   const elementos = document.querySelectorAll(
-    ".titulo_slider_manual, .titulo_galeria_princi, .slogan_principal_galeria, .cont_etiqueta_acerca, .cont_etiqueta_acerca_twow, .titulo_comentarios, .slogan_cometarios, .algunos_coments, .item_comment, .cont_formulario_footer"
+    ".titulo_slider_manual, .titulo_galeria_princi, .slogan_principal_galeria, .cont_etiqueta_acerca, .cont_etiqueta_acerca_twow, .titulo_comentarios, .slogan_cometarios, .algunos_coments, .item_comentario, .cont_formulario_footer"
   );
 
   elementos.forEach((element, index) => observarElementoScroll(element, Math.min((index % 4) * 70, 210)));
