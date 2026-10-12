@@ -1495,24 +1495,3 @@ function mostrarNotificacionResena(mensaje, tipo) {
         });
     }
 }
-            rightSlides.forEach(slide => {
-                slide.style.flex = '0 0 100%';
-                slide.style.width = '100%';
-            });
-            current = index;
-        }
-        showSlide(0);
-        // Navegación con flechas globales
-        leftArrow.addEventListener('click', () => {
-            let next = current - 1;
-            if (next < 0) next = total - 1;
-            showSlide(next);
-        });
-        rightArrow.addEventListener('click', () => {
-            let next = current + 1;
-            if (next >= total) next = 0;
-            showSlide(next);
-        });
-    }
-    setupSyncedSliders('.cont_left_galeria', '.cont_rigth_galeria');
-});
