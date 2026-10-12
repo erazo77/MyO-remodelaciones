@@ -2768,11 +2768,8 @@ margin-top: 5vh;
   align-items: end;
   border-radius: 1vh;
   box-shadow: 2px 4px 6px var(--clr-segundario);
-  background-image: url("./img/card_presen-M&O.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-
+  background: rgba(23, 23, 23, 0.7);
+  border: 1px solid rgba(178, 149, 107, 0.2);
 }
 
 .titulo_contacto_footer {
