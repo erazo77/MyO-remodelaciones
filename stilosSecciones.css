@@ -5076,15 +5076,6 @@ body {
   background: #171717;
 }
 
-.contenedor_padre {
-  background: linear-gradient(180deg, #171717 0%, #211f1c 100%);
-  color: var(--clr-parrafos);
-}
-
-.contenedor_padre.active_fondo {
-  background: #ffffff;
-}
-
 .conte_encabezado {
   background-color: rgba(23, 23, 23, 0.96);
   border-bottom: 1px solid rgba(178, 149, 107, 0.3);
@@ -5551,7 +5542,7 @@ body {
   align-items: stretch;
   justify-content: flex-start;
   gap: 12px;
-  background: #24221f;
+  background: rgba(36, 34, 31, 0.7);
   background-image: none;
   border: 1px solid rgba(178, 149, 107, 0.35);
   border-radius: 12px;
