@@ -35,6 +35,11 @@ body::-webkit-scrollbar-thumb {
 .contenedor_padre {
   height: 100%;
   background-color: var(--clr-principal);
+  background-image: url('./img/fondo_textura_myo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
 }
@@ -45,6 +50,7 @@ body::-webkit-scrollbar-thumb {
   --clr-borde: rgba(23, 23, 23, 0.18);
   --clr-terciario: #51432f;
   background: #ffffff;
+  background-image: none;
   color: #171717;
 }
 
@@ -1561,7 +1567,7 @@ h4 {
   display: flex;
   transform: rotateY(45deg);
 
-  background: var(--clr-principal);
+  background: rgba(23, 23, 23, 0.6);
   box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.849),
               -6px -6px 12px rgba(255, 255, 255, 0.274);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1977,7 +1983,7 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   justify-content: center;
   transform: rotateY(-45deg);
   overflow: hidden;
-  background: var(--clr-principal);
+  background: rgba(23, 23, 23, 0.6);
   box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4),
               -6px -6px 12px rgba(255, 255, 255, 0.08);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -2099,7 +2105,7 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   line-height: 3vh;
   font-family: Arial, Helvetica, sans-serif;
   text-align: left;
-  background-color: var(--clr-principal);
+  background-color: rgba(23, 23, 23, 0.6);
   color: var(--clr-parrafos);
   padding: 3vh;
   transition: 0.5s;
@@ -2579,7 +2585,7 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   display: flex;
   gap: 1.25rem;
   padding: 1.5rem;
-  background: var(--clr-principal);
+  background: rgba(23, 23, 23, 0.7);
   border: 1px solid rgba(178, 149, 107, 0.2);
   border-radius: 1rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
@@ -3657,10 +3663,11 @@ margin-top: 5vh;
 .cont_reseñas_usuario {
   margin-top: 32px;
   padding: 24px;
-  background: var(--clr-principal);
+  background: rgba(23, 23, 23, 0.7);
   border-radius: 16px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4),
               -10px -10px 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(178, 149, 107, 0.15);
 }
 
 .titulo_reseñas_usuario {
@@ -5669,7 +5676,7 @@ body {
 .seccion_propuesta {
   scroll-margin-top: 90px;
   padding: 88px 6vw;
-  background: #211f1c;
+  background: transparent;
   border-top: 1px solid rgba(178, 149, 107, 0.25);
   border-bottom: 1px solid rgba(178, 149, 107, 0.25);
 }
