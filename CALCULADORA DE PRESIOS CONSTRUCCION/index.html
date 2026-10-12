@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora 2025 Colombia </title>
+    <link rel="icon" href="../img/logom%26o-removebackgrounds-ai.png" type="image/png">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="main-columns">
+        <div class="container">
+            <a class="boton-cerrar-calculadora" href="../index.html" aria-label="Cerrar la calculadora y volver al sitio de M&O" title="Volver al sitio de M&O">
+                <span aria-hidden="true">&times;</span>
+                <span>Cerrar</span>
+            </a>
+            <h1>Calculadora de Precios de Construcción</h1>
+            <form id="calc-form">
+                <label for="category">Categoría:</label>
+                <select id="category" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="remodelacion">Remodelación</option>
+                    <option value="plomeria">Plomería</option>
+                    <option value="electricidad">Electricidad</option>
+                    <option value="pintura">Pintura</option>
+                    <option value="carpinteria">Carpintería</option>
+                    <option value="ventaneria">Ventanería</option>
+                    <option value="limpieza">Limpieza</option>
+                    <option value="acabados">Acabados</option>
+                    <option value="mano_obra_oficios">Tarifas Mano de Obra por Oficio</option>
+                </select>
+
+                <label for="service">Servicio:</label>
+                <select id="service" required>
+                    <option value="">Seleccione un servicio</option>
+                </select>
+
+                <label for="tipo-precio">Tipo de precio:</label>
+                <select id="tipo-precio" required>
+                    <option value="mano_obra">Mano de Obra</option>
+                    <option value="todo_costo">Todo Costo</option>
+                </select>
+                <div id="ayuda-tarifa-limpieza" style="display:none; font-size:0.95em; color:#555; margin-bottom:10px;">
+                    <strong>Valor Base:</strong> Servicio diurno normal.<br>
+                    <strong>Nocturno:</strong> Servicio realizado en la noche (+35%).<br>
+                    <strong>Festivo:</strong> Servicio en día festivo (+100%).
+                </div>
+
+                <label for="cantidad">Cantidad (m², unidades, días, etc):</label>
+                <input type="number" id="cantidad" min="1" value="1" required>
+
+                <button type="submit">Calcular</button>
+            </form>
+            <div id="resultado"></div>
+        </div>
+        <div class="remodelacion-completa-card">
+          <h2>Remodelación Completa – Precio por Área y calidad de materiales <span style="font-size:0.7em;">(COP 2025)</span></h2>
+          <div class="remodelacion-aclaracion">A todo costo: incluye acabados interiores, cocina, baños, pintura, pisos, iluminación, puertas, enchapes, etc.</div>
+          <div class="remodelacion-slider">
+            <button class="slider-arrow slider-arrow-left" id="slider-prev" aria-label="Anterior">&#8592;</button>
+            <div class="remodelacion-slider-viewport">
+              <div class="remodelacion-tarjetas-slider">
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/25mt.jpg" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">25 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $11.250.000 – $15.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $16.250.000 – $23.750.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $25.000.000 – $37.500.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/35mt.jpg" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">35 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $15.750.000 – $21.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $22.750.000 – $33.250.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $35.000.000 – $52.500.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/45mt.webp" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">45 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $20.250.000 – $27.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $29.250.000 – $42.750.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $45.000.000 – $67.500.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/60mt.webp" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">60 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $27.000.000 – $36.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $39.000.000 – $57.000.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $60.000.000 – $90.000.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/75mt.jpg" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">75 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $33.750.000 – $45.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $48.750.000 – $71.250.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $75.000.000 – $112.500.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/90mt.webp" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">90 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $40.500.000 – $54.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $58.500.000 – $85.500.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $90.000.000 – $135.000.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/100mt.webp" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">100 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $45.000.000 – $60.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $65.000.000 – $95.000.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $100.000.000 – $150.000.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="remodelacion-tarjeta">
+                  <img src="./img/120mt.webp" alt="Apartamento" class="remodelacion-img" />
+                  <div class="remodelacion-area">120 m²</div>
+                  <div class="remodelacion-precios">
+                    <div class="remodelacion-precio basico">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $54.000.000 – $72.000.000 <span class="sub">($450k–$600k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio medio">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $78.000.000 – $114.000.000 <span class="sub">($650k–$950k/m²)</span>
+                    </div>
+                    <div class="remodelacion-precio alto">
+                      <span class="estrellas-nivel">
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="estrella-nivel" width="18" height="18" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      </span>
+                      $120.000.000 – $180.000.000 <span class="sub">($1M–$1.5M/m²)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="slider-arrow slider-arrow-right" id="slider-next" aria-label="Siguiente">&#8594;</button>
+          </div>
+          <div class="remodelacion-notas">
+            <strong>Notas importantes:</strong>
+            <ul>
+              <li>Valores estimados para remodelación completa interior: incluye pisos, paredes, pintura, enchapes, cielo raso, baños, cocina, puertas, iluminación, y detalles decorativos.</li>
+              <li>No incluye: mobiliario suelto, electrodomésticos, intervenciones estructurales, ni instalaciones externas.</li>
+              <li>Estos precios aplican para apartamentos en condiciones normales (sin demolición o reforzamiento estructural).</li>
+            </ul>
+          </div>
+        </div>
+    </div>
+    <div id="botones-fijos">
+        <button id="descargar-pdf">Descargar cotización (PDF)</button>
+        <button id="vaciar-carrito" style="display:none;">Limpiar cotización</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="./logica.js"></script>
+    <script>
+    // Mostrar/ocultar ayuda de tarifa limpieza
+    const categorySelect = document.getElementById('category');
+    const ayudaTarifa = document.getElementById('ayuda-tarifa-limpieza');
+    categorySelect.addEventListener('change', function() {
+        if (this.value === 'limpieza') {
+            ayudaTarifa.style.display = 'block';
+        } else {
+            ayudaTarifa.style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>
