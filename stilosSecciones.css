@@ -354,6 +354,16 @@ body::-webkit-scrollbar-thumb {
   z-index: 2;
   left: 50vh;
   display: none;
+  animation: floatUpDown 4s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .titulo_landing {
@@ -2722,7 +2732,7 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   flex-direction: column;
   justify-content: center;
   padding: 3vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), var(--clr-principal)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)),
     url(./img/fondo_comentarios.webp);
   background-position: center;
   background-repeat: no-repeat;
@@ -2730,8 +2740,9 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   border-radius: 1.5vh;
   position: relative;
   min-height: 300px;
-  background-color: rgba(23, 23, 23, 0.6);
+  background-color: rgba(23, 23, 23, 0.35);
   background-blend-mode: overlay;
+  backdrop-filter: blur(12px);
 }
 
 .cont_lef_comentarios::before {
@@ -2829,11 +2840,16 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   display: flex;
   gap: 1.25rem;
   padding: 1.5rem;
-  background: rgba(23, 23, 23, 0.7);
-  border: 1px solid rgba(178, 149, 107, 0.2);
+  background: rgba(23, 23, 23, 0.4);
+  border: 1px solid rgba(178, 149, 107, 0.15);
   border-radius: 1rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.item_comentario:hover {
+  background: rgba(23, 23, 23, 0.55);
 }
 
 @media (hover: hover) {
@@ -2876,6 +2892,7 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   color: var(--clr-segundario);
   font-size: 1.1rem;
   line-height: 1;
+  opacity: 0.85;
 }
 
 .comentario_texto {
@@ -2917,11 +2934,11 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   max-width: 720px;
   margin: 0 auto;
   padding: 2.5rem;
-  background: rgba(23, 23, 23, 0.2);
-  backdrop-filter: blur(25px);
+  background: rgba(23, 23, 23, 0.15);
+  backdrop-filter: blur(20px);
   border-radius: 1.5rem;
-  border: 1px solid rgba(178, 149, 107, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(178, 149, 107, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 .seccion_reseña .titulo_reseñas_usuario {
@@ -3106,8 +3123,20 @@ margin-top: 5vh;
 /* responsive pantallas de alta resolucion*/
 @media screen and (max-width: 1200px) {
 
+  .contenedor_landing {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cont_one,
   .conte_twow {
     width: 100%;
+    max-width: 100%;
+  }
+
+  .conte_twow {
+    height: auto;
+    max-height: none;
   }
 
   .conte_encabezado {
@@ -3959,11 +3988,11 @@ margin-top: 5vh;
 .cont_reseñas_usuario {
   margin-top: 32px;
   padding: 24px;
-  background: rgba(23, 23, 23, 0.25);
-  backdrop-filter: blur(25px);
+  background: rgba(23, 23, 23, 0.15);
+  backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(178, 149, 107, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(178, 149, 107, 0.08);
 }
 
 .titulo_reseñas_usuario {
@@ -4003,10 +4032,10 @@ margin-top: 5vh;
 .form_textarea_reseña {
   width: 100%;
   padding: 12px 16px;
-  border: 2px solid rgba(178, 149, 107, 0.25);
+  border: 1px solid rgba(178, 149, 107, 0.2);
   border-radius: 10px;
-  background: rgba(23, 23, 23, 0.4);
-  backdrop-filter: blur(8px);
+  background: rgba(23, 23, 23, 0.25);
+  backdrop-filter: blur(6px);
   color: #f5f2ed;
   font-family: "Manrope", sans-serif;
   font-size: 1rem;
@@ -4018,8 +4047,8 @@ margin-top: 5vh;
 .form_textarea_reseña:focus {
   outline: none;
   border-color: var(--clr-segundario);
-  box-shadow: 0 0 0 3px rgba(178, 149, 107, 0.2);
-  background: rgba(23, 23, 23, 0.6);
+  box-shadow: 0 0 0 3px rgba(178, 149, 107, 0.15);
+  background: rgba(23, 23, 23, 0.4);
 }
 
 .form_input_reseña::placeholder,
@@ -4047,10 +4076,10 @@ margin-top: 5vh;
 .estrella_label {
   cursor: pointer;
   font-size: 2.25rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.2);
   transition: color 0.15s ease, transform 0.1s ease;
   user-select: none;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
 }
 
 /* HOVER: usa :has() para detectar cuál se hovera y pintar esa + anteriores */
@@ -4166,9 +4195,10 @@ margin-top: 5vh;
 
 .cont_reseñas_lista li {
   padding: 16px;
-  background: rgba(245, 242, 237, 0.05);
+  background: rgba(23, 23, 23, 0.2);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
-  border: 1px solid rgba(178, 149, 107, 0.15);
+  border: 1px solid rgba(178, 149, 107, 0.1);
   animation: fadeInUp 0.4s ease;
 }
 
@@ -4220,10 +4250,11 @@ margin-top: 5vh;
 .reseña_estrellas i {
   color: var(--clr-segundario);
   font-size: 1rem;
+  opacity: 0.85;
 }
 
 .reseña_estrellas i.vacio {
-  color: rgba(178, 149, 107, 0.2);
+  color: rgba(178, 149, 107, 0.15);
 }
 
 .reseña_texto {
@@ -5729,6 +5760,17 @@ body {
 }
 
 @media (max-width: 900px) {
+  .contenedor_landing {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cont_one,
+  .conte_twow {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .conte_twow {
     display: flex;
     flex-direction: column;
@@ -5749,6 +5791,15 @@ body {
     margin-top: 3vh;
   }
 
+  .contenedor_all {
+    height: auto;
+    min-height: 35vh;
+  }
+
+  .contenedor_carrusel3d {
+    height: 25vh;
+  }
+
   .wrapper {
     width: 100%;
     min-width: 0;
@@ -5760,6 +5811,41 @@ body {
 }
 
 @media (max-width: 480px) {
+  .contenedor_landing {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5vh;
+  }
+
+  .cont_one,
+  .conte_twow {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .contenedor_all {
+    height: auto;
+    min-height: 30vh;
+  }
+
+  .contenedor_carrusel3d {
+    height: 20vh;
+  }
+
+  .item_carrusel {
+    margin-left: 0;
+  }
+
+  .imajen_carrusel {
+    width: 8vh;
+  }
+
+  h4 {
+    font-size: 1.2vh;
+    margin-top: 15vh;
+    padding: 0.5vh;
+  }
+
   .cont_incrementadores {
     gap: clamp(2px, 1vw, 6px);
     padding: 10px 0;
