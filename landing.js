@@ -1233,11 +1233,20 @@ document.addEventListener('DOMContentLoaded', function () {
             let current = 0;
             const total = slides.length;
             
+            // Initialize slide position
             slide.style.display = 'flex';
+            slide.style.position = 'absolute';
+            slide.style.top = '0';
+            slide.style.left = '0';
+            slide.style.width = '100%';
+            slide.style.height = '100%';
             slide.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+            slide.style.transform = 'translateX(0)';
+            
             slides.forEach(s => {
                 s.style.flex = '0 0 100%';
                 s.style.width = '100%';
+                s.style.height = '100%';
             });
             
             function showSlide(index) {
@@ -1246,6 +1255,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 slide.style.transform = `translateX(-${index * 100}%)`;
                 if (radios[index]) radios[index].checked = true;
                 current = index;
+                
+                // Play current video, pause others
+                slides.forEach((s, i) => {
+                    const video = s.querySelector('video');
+                    if (video) {
+                        if (i === index) {
+                            video.currentTime = 0;
+                            video.play().catch(() => {});
+                        } else {
+                            video.pause();
+                            video.currentTime = 0;
+                        }
+                    }
+                });
             }
             
             if (prevBtn) prevBtn.addEventListener('click', (e) => { e.preventDefault(); showSlide(current - 1); });
