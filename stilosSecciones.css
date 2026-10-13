@@ -863,6 +863,15 @@ h4 {
     margin-top: 0;
   }
 }
+
+/* ===== RESPONSIVE SLIDER NAV ===== */
+@media (max-width: 768px) {
+  .slider-nav {
+    display: none;
+  }
+}
+
+  .cont_incrementadores {
   position: absolute;
   width: 100%;
   height: 20vh;
