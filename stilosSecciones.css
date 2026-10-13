@@ -880,6 +880,7 @@ h4 {
   gap: 1.5vh;
   padding: 2vh 0;
   margin-bottom: 2vh;
+
 }
 
 .incre_proyec {
@@ -1700,6 +1701,12 @@ h4 {
 
 .video_slider .slider-nav {
   z-index: 200;
+  width: 5vh;
+  height: 5vh;
+  font-size: 2.5vh;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(178, 149, 107, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .video_slider .slider-nav.prev {
@@ -1708,6 +1715,13 @@ h4 {
 
 .video_slider .slider-nav.next {
   right: 2vh;
+}
+
+.video_slider .slider-nav:hover {
+  background: rgba(178, 149, 107, 0.9);
+  color: var(--clr-principal);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(178, 149, 107, 0.5);
 }
 
 .video_slider .pagination {
@@ -5617,10 +5631,6 @@ body {
     font-size: 2.2rem;
   }
 
-  .cont_incrementadores {
-    margin-top: 3vh;
-  }
-
   .wrapper .carousel {
     margin-top: 3vh;
     margin-bottom: 3vh;
@@ -5652,8 +5662,7 @@ body {
     padding: 12px 0;
     gap: 8px;
     justify-content: space-between;
-    margin-top: 4vh;
-    margin-bottom: 3vh;
+
   }
 
   .wrapper .carousel {
