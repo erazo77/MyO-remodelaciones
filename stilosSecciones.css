@@ -358,7 +358,7 @@ body::-webkit-scrollbar-thumb {
   width: 20vw;
   top: 45vh;
   z-index: 2;
-  left: 50vh;
+  left: 30vw;
   display: none;
   animation: floatUpDown 4s ease-in-out infinite;
 }
@@ -396,7 +396,7 @@ body::-webkit-scrollbar-thumb {
   background-color: var(--clr-parrafos);
   border-radius: 3vh;
   float: inline-end;
-  margin-left: 39rem;
+  margin-left: 2rem;
   margin-top: 32vh;
   z-index: 120;
   overflow: hidden;
