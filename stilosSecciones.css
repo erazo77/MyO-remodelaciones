@@ -1442,6 +1442,7 @@ h4 {
   font-size: 3vh;
   color: var(--clr-parrafos);
   margin-top: 2vh;
+  margin-bottom: 3vh;
   z-index: 10;
   pointer-events: none;
 }
@@ -1521,7 +1522,7 @@ h4 {
   scroll-behavior: smooth;
   border-bottom: 1px solid var(--clr-segundario);
   border-radius: 2vh;
-  margin-top: 13vh;
+  margin-top: 3vh;
   will-change: transform, scroll-position;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
