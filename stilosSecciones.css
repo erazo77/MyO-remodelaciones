@@ -1653,23 +1653,18 @@ h4 {
   overflow: hidden;
 }
 
-/* Title overlay on video */
+/* Title below video slider */
 .titulo_galeria_princi {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: white;
   font-size: clamp(1.8rem, 3.5vw, 3.2vh);
   text-align: center;
   font-weight: 600;
-  z-index: 100;
-  pointer-events: none;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.6);
   width: 85%;
   max-width: 700px;
   line-height: 1.25;
-  padding: 0.8vh 1vh;
+  padding: 1vh 1.5vh;
+  margin: 2vh auto 1vh;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
   border-radius: 1vh;
   backdrop-filter: blur(4px);
@@ -5649,8 +5644,7 @@ body {
 
 @media (max-width: 900px) {
   .wrapper .titulo_slider_manual {
-    margin-top: 3vh;
-    font-size: 2.2rem;
+       font-size: 2.2rem;
   }
 
   .titulo-proyectos-principal {
@@ -5659,7 +5653,7 @@ body {
 
   .wrapper .carousel {
     margin-top: 3vh;
-    margin-bottom: 3vh;
+
     width: 100%;
     max-width: 100%;
   }
