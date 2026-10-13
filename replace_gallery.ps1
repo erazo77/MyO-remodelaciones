@@ -1,12 +1,13 @@
 $content = Get-Content 'C:\Users\usuario\Desktop\M&O web\index.html' -Raw -Encoding UTF8
-$start = $content.IndexOf('<!-- ///////////////////////////SECCION GALERIA//////////////// -->')
-$end = $content.IndexOf('<!-- ///////////////////////////SECCION ACERCA//////////////// -->')
+$newSection = Get-Content 'C:\Users\usuario\Desktop\M&O web\gallery_section.html' -Raw -Encoding UTF8
 
-if ($start -ne -1 -and $end -ne -1) {
-    $newSection = Get-Content 'C:\Users\usuario\Desktop\M&O web\new_gallery.html' -Raw -Encoding UTF8
+$start = 20813
+$end = 22763
+
+if ($end -ne -1) {
     $newContent = $content.Substring(0, $start) + $newSection + "`n`n" + $content.Substring($end)
     Set-Content 'C:\Users\usuario\Desktop\M&O web\index.html' -Value $newContent -Encoding UTF8
-    Write-Host 'Gallery section replaced successfully'
+    Write-Host 'Replaced successfully'
 } else {
-    Write-Host 'Markers not found: start=' + $start + ' end=' + $end
+    Write-Host 'End not found'
 }

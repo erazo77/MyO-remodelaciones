@@ -1807,6 +1807,29 @@ h4 {
 .comparacion_label.antes { color: #e8c56d; }
 .comparacion_label.despues { color: #b2956b; }
 
+.comparacion_label_overlay {
+  position: absolute;
+  top: 1.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 50;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.5vh 1.5vh;
+  border-radius: 2vh;
+  backdrop-filter: blur(4px);
+}
+
+.comparacion_label_overlay.antes { color: #e8c56d; }
+.comparacion_label_overlay.despues { color: #b2956b; }
+
 .comparacion_slider {
   position: relative;
   flex: 1;
