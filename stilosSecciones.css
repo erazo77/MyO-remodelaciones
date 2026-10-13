@@ -1649,17 +1649,20 @@ h4 {
   transform: translate3d(0, 0, 0);
 }
 
-.item-slide img {
+.item-slide img,
+.item-slide video {
   position: relative;
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
-  height: 35vh;
+  height: 100%;
+  max-height: 100%;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
   flex-shrink: 0;
   scroll-snap-align: start;
+  border-radius: 0.7vh;
 }
 
 .Leer_Mas_slider_galeria {
@@ -1682,6 +1685,56 @@ h4 {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* ===== Slider Navigation Controls ===== */
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  background: rgba(23, 23, 23, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(178, 149, 107, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--clr-segundario);
+  font-size: 2.5vh;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.slider-nav:hover {
+  opacity: 1;
+  background: rgba(178, 149, 107, 0.9);
+  color: var(--clr-principal);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 16px rgba(178, 149, 107, 0.4);
+}
+
+.slider-nav.prev {
+  left: 1.5vh;
+}
+
+.slider-nav.next {
+  right: 1.5vh;
+}
+
+.slider-nav:focus-visible {
+  outline: 2px solid var(--clr-segundario);
+  outline-offset: 2px;
+}
+
+/* Hide nav on mobile, show pagination instead */
+@media (max-width: 768px) {
+  .slider-nav {
+    display: none;
+  }
+}
+
 .pagination {
   position: absolute;
   width: 100%;
@@ -1689,54 +1742,115 @@ h4 {
   align-items: center;
   justify-content: center;
   padding: 1vh;
-  bottom: 9vh;
-
-
+  bottom: 4vh;
+  gap: 0.5vh;
 }
 
 .pagination-item {
   display: flex;
   align-items: center;
-  width: 2vh;
-  height: 2vh;
-  border-radius: 1vh;
+  justify-content: center;
+  width: 1.8vh;
+  height: 1.8vh;
+  border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  background: var(--clr-segundario);
-  margin: 0px 1rem;
+  background: rgba(178, 149, 107, 0.4);
+  border: 2px solid transparent;
+  margin: 0 0.3vh;
   text-align: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, background-color, box-shadow;
   backface-visibility: hidden;
-  min-width: 2vh;
-  min-height: 2vh;
+  min-width: 1.8vh;
+  min-height: 1.8vh;
 }
 
-@media (hover: hover) {
-  .pagination-item:hover {
-    box-shadow: 3px 3px 6px rgba(255, 243, 14, 0.8);
-    background-color: var(--clr-principal);
-  }
-
-  .pagination-item:active {
-    box-shadow: 3px 3px 6px rgba(255, 243, 14, 0.8);
-    background-color: var(--clr-principal);
-  }
-}
-
-.pagination-item img {
-  display: inline-block;
-  max-width: none;
-  height: 100%;
+.pagination-item::before {
+  content: '';
+  width: 0.6vh;
+  height: 0.6vh;
+  border-radius: 50%;
+  background: currentColor;
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity;
-  backface-visibility: hidden;
+  transition: opacity 0.2s ease;
 }
 
-.pagination-item:hover img {
+.pagination-item:hover {
+  background: var(--clr-segundario);
+  transform: scale(1.2);
+  box-shadow: 0 2px 8px rgba(178, 149, 107, 0.5);
+}
+
+.pagination-item:hover::before {
   opacity: 1;
-  transform: scale(1.05);
+}
+
+input[id="1"]:checked~.pagination .pagination-item[for="1"]::before,
+input[id="2"]:checked~.pagination .pagination-item[for="2"]::before,
+input[id="3"]:checked~.pagination .pagination-item[for="3"]::before,
+input[id="4"]:checked~.pagination .pagination-item[for="4"]::before,
+input[id="5"]:checked~.pagination .pagination-item[for="5"]::before,
+input[id="6"]:checked~.pagination .pagination-item[for="6"]::before,
+input[id="7"]:checked~.pagination .pagination-item[for="7"]::before,
+input[id="8"]:checked~.pagination .pagination-item[for="8"]::before,
+input[id="9"]:checked~.pagination .pagination-item[for="9"]::before,
+input[id="10"]:checked~.pagination .pagination-item[for="10"]::before {
+  opacity: 1;
+  background: var(--clr-principal);
+}
+
+input[id="1"]:checked~.pagination .pagination-item[for="1"],
+input[id="2"]:checked~.pagination .pagination-item[for="2"],
+input[id="3"]:checked~.pagination .pagination-item[for="3"],
+input[id="4"]:checked~.pagination .pagination-item[for="4"],
+input[id="5"]:checked~.pagination .pagination-item[for="5"],
+input[id="6"]:checked~.pagination .pagination-item[for="6"],
+input[id="7"]:checked~.pagination .pagination-item[for="7"],
+input[id="8"]:checked~.pagination .pagination-item[for="8"],
+input[id="9"]:checked~.pagination .pagination-item[for="9"],
+input[id="10"]:checked~.pagination .pagination-item[for="10"] {
+  background: var(--clr-segundario);
+  border-color: var(--clr-principal);
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(178, 149, 107, 0.6);
+}
+
+/* ===== Right Gallery Slider Controls ===== */
+.cont_rigth_galeria .slider-nav {
+  width: 4.5vh;
+  height: 4.5vh;
+  font-size: 2vh;
+}
+
+.cont_rigth_galeria .slider-nav.prev {
+  left: 1vh;
+}
+
+.cont_rigth_galeria .slider-nav.next {
+  right: 1vh;
+}
+
+/* Ensure slides fill container properly */
+.container-all {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container-all .slide {
+  width: 100%;
+  height: 100%;
+}
+
+.container-all .item-slide {
+  width: 100%;
+  height: 100%;
 }
 
 input[id="1"]:checked~.slide {

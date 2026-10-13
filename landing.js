@@ -1316,6 +1316,159 @@ document.addEventListener('DOMContentLoaded', function () {
     setupSyncedSliders('.cont_left_galeria', '.cont_rigth_galeria');
 });
 
+// === CONTROLES INDIVIDUALES PARA SLIDERS LEFT Y RIGHT ===
+document.addEventListener('DOMContentLoaded', function () {
+    function setupIndividualSliderControls(containerSelector) {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+        
+        const slide = container.querySelector('.slide');
+        const slides = container.querySelectorAll('.slide .item-slide');
+        const prevBtn = container.querySelector('.slider-nav.prev');
+        const nextBtn = container.querySelector('.slider-nav.next');
+        const dots = container.querySelectorAll('.pagination-item');
+        const radios = container.querySelectorAll('input[type="radio"][name="image-slide"]');
+        
+        if (!slide || slides.length === 0) return;
+        
+        let current = 0;
+        const total = slides.length;
+        
+        // Ensure slide container is flex
+        slide.style.display = 'flex';
+        slide.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+        slides.forEach(s => {
+            s.style.flex = '0 0 100%';
+            s.style.width = '100%';
+        });
+        
+        function showSlide(index) {
+            if (index < 0) index = total - 1;
+            if (index >= total) index = 0;
+            slide.style.transform = `translateX(-${index * 100}%)`;
+            if (radios[index]) radios[index].checked = true;
+            dots.forEach((dot, i) => {
+                // The CSS handles active state via :checked, but we can add visual feedback
+            });
+            current = index;
+        }
+        
+        // Prev button
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                showSlide(current - 1);
+            });
+        }
+        
+        // Next button
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                showSlide(current + 1);
+            });
+        }
+        
+        // Pagination dots
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => showSlide(i));
+        });
+        
+        // Radio inputs (keyboard/accessibility)
+        radios.forEach((radio, i) => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) showSlide(i);
+            });
+        });
+        
+        // Keyboard navigation
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                showSlide(current - 1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                showSlide(current + 1);
+            }
+        });
+        
+        // Touch/swipe support
+        let startX = 0;
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        container.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) showSlide(current + 1);
+                else showSlide(current - 1);
+            }
+        }, { passive: true });
+        
+        // Initialize
+        showSlide(0);
+    }
+    
+    setupIndividualSliderControls('.cont_left_galeria');
+    setupIndividualSliderControls('.cont_rigth_galeria');
+    
+    // Center gallery slider (videos)
+    const centro = document.querySelector('.cont_centro_galeria .container-all');
+    if (centro) {
+        const slide = centro.querySelector('.slide');
+        const slides = centro.querySelectorAll('.slide .item-slide');
+        const prevBtn = centro.querySelector('.slider-nav.prev');
+        const nextBtn = centro.querySelector('.slider-nav.next');
+        const dots = centro.querySelectorAll('.pagination-item');
+        const radios = centro.querySelectorAll('input[type="radio"][name="image-slide"]');
+        
+        if (slide && slides.length > 0) {
+            let current = 0;
+            const total = slides.length;
+            
+            slide.style.display = 'flex';
+            slide.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+            slides.forEach(s => {
+                s.style.flex = '0 0 100%';
+                s.style.width = '100%';
+            });
+            
+            function showSlide(index) {
+                if (index < 0) index = total - 1;
+                if (index >= total) index = 0;
+                slide.style.transform = `translateX(-${index * 100}%)`;
+                if (radios[index]) radios[index].checked = true;
+                current = index;
+            }
+            
+            if (prevBtn) prevBtn.addEventListener('click', (e) => { e.preventDefault(); showSlide(current - 1); });
+            if (nextBtn) nextBtn.addEventListener('click', (e) => { e.preventDefault(); showSlide(current + 1); });
+            dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+            radios.forEach((radio, i) => radio.addEventListener('change', () => { if (radio.checked) showSlide(i); }));
+            
+            // Keyboard
+            centro.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(current - 1); }
+                else if (e.key === 'ArrowRight') { e.preventDefault(); showSlide(current + 1); }
+            });
+            
+            // Touch swipe
+            let startX = 0;
+            centro.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+            centro.addEventListener('touchend', (e) => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) { showSlide(diff > 0 ? current + 1 : current - 1); }
+            }, { passive: true });
+            
+            showSlide(0);
+        }
+    }
+});
+
 // === SISTEMA DE RESEÑAS CON ESTRELLAS ===
 document.addEventListener('DOMContentLoaded', function () {
     const formResena = document.getElementById('formResena');
