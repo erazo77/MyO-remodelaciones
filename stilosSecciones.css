@@ -139,7 +139,7 @@ body::-webkit-scrollbar-thumb {
   background-color: var(--clr-principal);
   border-radius: 0 0 1.5vh 1.5vh;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-  z-index: 9999;
+  z-index: 1000;
   padding: 0 4vw;
 }
 
@@ -3150,7 +3150,7 @@ margin-top: 5vh;
     padding-top: 12vh;
     gap: 3vh;
     box-shadow: none;
-    z-index: 9999;
+    z-index: 1001;
     animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     overflow-y: auto;
     border-left: none;
@@ -3370,7 +3370,7 @@ margin-top: 5vh;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
-    z-index: 9998;
+    z-index: 999;
     backdrop-filter: none; /* Elimina el blur */
   }
 
