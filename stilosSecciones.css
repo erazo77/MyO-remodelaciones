@@ -1591,6 +1591,30 @@ h4 {
   background: var(--clr-principal);
 }
 
+.video_slider {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  max-height: 600px;
+  min-height: 400px;
+}
+
+.video_slider .slide {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video_slider .item-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .video_slider .slider-nav {
   z-index: 200;
 }
