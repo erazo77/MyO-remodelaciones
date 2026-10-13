@@ -2538,10 +2538,8 @@ input[id="10"]:checked~.pagination .pagination-item[for="10"] {
   padding: 2vh;
   display: flex;
   flex-direction: column;
-  background: rgba(23, 23, 23, 0.3);
+  background: transparent;
   border-radius: 1.5vh;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(178, 149, 107, 0.1);
 }
 
 .algunos_coments {
