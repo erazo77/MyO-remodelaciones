@@ -5694,6 +5694,7 @@ body {
     padding: 12px 8px;
     gap: clamp(10px, 2vw, 20px);
     justify-content: center;
+    margin-top: 3vh;
   }
 
   .wrapper {
@@ -5710,6 +5711,7 @@ body {
   .cont_incrementadores {
     gap: clamp(2px, 1vw, 6px);
     padding: 10px 0;
+    margin-top: 2vh;
   }
 
   .logo_pequeño {
