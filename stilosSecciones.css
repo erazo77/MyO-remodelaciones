@@ -155,6 +155,12 @@ body::-webkit-scrollbar-thumb {
   display: none;
 }
 
+@media (max-width: 900px) {
+  .hamburger-menu {
+    display: flex;
+  }
+}
+
 .logo_nav {
   position: relative;
   width: 8vh;
@@ -3180,9 +3186,9 @@ margin-top: 5vh;
     border-left: none;
   }
 
-  /* Botón de cerrar en el menú, plano */
-  .nav-menu.active::before {
-    content: "✕";
+/* Botón de cerrar en el menú, plano */
+  .nav-menu.active .close-menu {
+    display: flex;
     position: absolute;
     top: 3vh;
     right: 3vh;
@@ -3198,10 +3204,13 @@ margin-top: 5vh;
     background: transparent;
     box-shadow: none;
     border: none;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    pointer-events: auto;
     z-index: 1100;
+  }
+  
+  .nav-menu.active .close-menu:hover {
+    background: rgba(0,0,0,0.07);
+    color: var(--clr-primario);
+    transform: scale(1.1);
   }
   .nav-menu.active::before:hover {
     background: rgba(0,0,0,0.07);
@@ -3752,17 +3761,24 @@ margin-top: 5vh;
     border-radius: 50%;
     width: 6vh;
     height: 6vh;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 1101;
     cursor: pointer;
     transition: background 0.3s, color 0.3s, transform 0.3s;
   }
+  .close-menu span {
+    font-weight: bold;
+  }
   .close-menu:hover {
     background: rgba(0,0,0,0.07);
     color: var(--clr-primario);
     transform: scale(1.1);
+  }
+  
+  .nav-menu.active .close-menu {
+    display: flex;
   }
   /* .nav-menu.active::before { display: none !important; } */
 }
@@ -4459,11 +4475,7 @@ margin-top: 5vh;
     overflow-y: visible !important;
     border-left: none !important;
   }
-  .hamburger-menu,
-  .close-menu {
-    display: none !important;
   }
-}
 
 /* Móvil: ocultar menú de escritorio, mostrar hamburguesa y botón cerrar solo en menú activo */
 @media screen and (max-width: 900px) {
@@ -4476,8 +4488,8 @@ margin-top: 5vh;
   .nav-menu.active {
     display: flex;
   }
-  .close-menu {
-    display: flex;
+  .nav-menu.active .close-menu {
+    display: flex !important;
   }
 }
 
