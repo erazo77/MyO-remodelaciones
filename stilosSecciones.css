@@ -42,6 +42,21 @@ body::-webkit-scrollbar-thumb {
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.contenedor_padre::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.contenedor_padre > * {
+  position: relative;
+  z-index: 1;
 }
 .contenedor_padre.active_fondo {
   --clr-principal: #ffffff;
@@ -52,6 +67,10 @@ body::-webkit-scrollbar-thumb {
   background: #ffffff;
   background-image: none;
   color: #171717;
+}
+
+.contenedor_padre.active_fondo::before {
+  display: none;
 }
 
 .contenedor_landing {
