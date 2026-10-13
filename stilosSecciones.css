@@ -163,6 +163,7 @@ body::-webkit-scrollbar-thumb {
 .logo_nav {
   position: relative;
   width: 8vh;
+  filter: drop-shadow(0 0 8px rgba(178, 149, 107, 0.8)) drop-shadow(0 0 16px rgba(178, 149, 107, 0.5));
 }
 
 .cont_inicio_landing {
