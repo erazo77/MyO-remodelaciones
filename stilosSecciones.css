@@ -5600,6 +5600,7 @@ body {
 
 .wrapper .carousel {
   margin-top: 2.5vh;
+  margin-bottom: 2vh;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -5617,7 +5618,8 @@ body {
   }
 
   .wrapper .carousel {
-    margin-top: 2vh;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
     width: 100%;
     max-width: 100%;
   }
@@ -5643,9 +5645,15 @@ body {
 
   .cont_incrementadores {
     width: 100%;
-    padding: 8px 0;
-    gap: 4px;
+    padding: 12px 0;
+    gap: 8px;
     justify-content: space-between;
+    margin-bottom: 3vh;
+  }
+
+  .wrapper .carousel {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
   }
 
   .logo_pequeño {
