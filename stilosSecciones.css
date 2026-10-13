@@ -2021,12 +2021,6 @@ input[name^="despues-slide"] {
   outline: 2px solid var(--clr-segundario);
   outline-offset: 2px;
 }
-
-/* Hide nav on mobile, show pagination instead */
-@media (max-width: 768px) {
-  .slider-nav {
-    display: none;
-  }
 }
 
 .pagination {
