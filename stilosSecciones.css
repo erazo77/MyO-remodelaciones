@@ -5617,6 +5617,10 @@ body {
     font-size: 2.2rem;
   }
 
+  .cont_incrementadores {
+    margin-top: 3vh;
+  }
+
   .wrapper .carousel {
     margin-top: 3vh;
     margin-bottom: 3vh;
@@ -5648,6 +5652,7 @@ body {
     padding: 12px 0;
     gap: 8px;
     justify-content: space-between;
+    margin-top: 4vh;
     margin-bottom: 3vh;
   }
 
