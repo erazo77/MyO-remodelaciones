@@ -2,17 +2,17 @@
   {
     "id": "remodelacion_01",
     "titulo": "Remodelación de Cocina Moderna",
-    "imagen": "./img/cocina 2.jpg",
+    "imagen": "./img/cocina-2.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "6.000.000 - 12.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 2.jpg",
-      "./img/cocina 1.jpg",
-      "./img/cocina 3.jpg",
-      "./img/cocina 4.jpg"
+      "./img/cocina-2.jpg",
+      "./img/cocina-1.jpg",
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg"
     ],
     "detalles": {
       "titulo": "Materiales Utilizados",
@@ -32,17 +32,17 @@
   {
     "id": "remodelacion_02",
     "titulo": "Cocina Integral Contemporánea",
-    "imagen": "./img/cocina 1.jpg",
+    "imagen": "./img/cocina-1.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "5.000.000 - 10.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 1.jpg",
-      "./img/cocina 2.jpg",
-      "./img/cocina 3.jpg",
-      "./img/cocina 4.jpg"
+      "./img/cocina-1.jpg",
+      "./img/cocina-2.jpg",
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg"
     ],
     "detalles": {
       "titulo": "Especificaciones Técnicas",
@@ -61,17 +61,17 @@
   {
     "id": "remodelacion_03",
     "titulo": "Cocina Minimalista con Isla",
-    "imagen": "./img/cocina 3.jpg",
+    "imagen": "./img/cocina-3.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "7.000.000 - 13.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 3.jpg",
-      "./img/cocina 4.jpg",
-      "./img/cocina 5.jpg",
-      "./img/cocina 6.jpg"
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-5.jpg",
+      "./img/cocina-6.jpg"
     ],
     "detalles": {
       "titulo": "Materiales y Diseño",
@@ -90,17 +90,17 @@
   {
     "id": "remodelacion_04",
     "titulo": "Cocina Rústica Modernizada",
-    "imagen": "./img/cocina 4.jpg",
+    "imagen": "./img/cocina-4.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "6.500.000 - 11.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 4.jpg",
-      "./img/cocina 2.jpg",
-      "./img/cocina 1.jpg",
-      "./img/cocina 3.jpg"
+      "./img/cocina-4.jpg",
+      "./img/cocina-2.jpg",
+      "./img/cocina-1.jpg",
+      "./img/cocina-3.jpg"
     ],
     "detalles": {
       "titulo": "Materiales y Estilo",
@@ -119,17 +119,17 @@
   {
     "id": "remodelacion_05",
     "titulo": "Cocina Industrial Chic",
-    "imagen": "./img/cocina 5.jpg",
+    "imagen": "./img/cocina-5.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "7.000.000 - 13.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 5.jpg",
-      "./img/cocina 6.jpg",
-      "./img/cocina 4.jpg",
-      "./img/cocina 3.jpg"
+      "./img/cocina-5.jpg",
+      "./img/cocina-6.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-3.jpg"
     ],
     "detalles": {
       "titulo": "Materiales y Diseño",
@@ -148,17 +148,17 @@
   {
     "id": "remodelacion_06",
     "titulo": "Cocina Abierta al Comedor",
-    "imagen": "./img/cocina 6.jpg",
+    "imagen": "./img/cocina-6.jpg",
     "categoria": {
       "nombre": "Cocinas",
       "id": "cocinas"
     },
     "precio_estimado": "7.000.000 - 13.000.000 COP",
     "imagenes_detalle": [
-      "./img/cocina 6.jpg",
-      "./img/cocina 5.jpg",
-      "./img/cocina 4.jpg",
-      "./img/cocina 3.jpg"
+      "./img/cocina-6.jpg",
+      "./img/cocina-5.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-3.jpg"
     ],
     "detalles": {
       "titulo": "Materiales y Diseño",
@@ -177,15 +177,15 @@
   {
     "id": "remodelacion_07",
     "titulo": "Baño Principal de Lujo",
-    "imagen": "./img/baño 1.jpg",
+    "imagen": "./img/baño-1.jpg",
     "categoria": {
       "nombre": "Baños",
       "id": "banos"
     },
     "precio_estimado": "8.000.000 - 15.000.000 COP",
     "imagenes_detalle": [
-      "./img/baño 1.jpg",
-      "./img/baño 2.jpg"
+      "./img/baño-1.jpg",
+      "./img/baño-2.jpg"
     ],
     "detalles": {
       "titulo": "Materiales Premium",
@@ -204,15 +204,15 @@
   {
     "id": "remodelacion_08",
     "titulo": "Baño Secundario Moderno",
-    "imagen": "./img/baño 2.jpg",
+    "imagen": "./img/baño-2.jpg",
     "categoria": {
       "nombre": "Baños",
       "id": "banos"
     },
     "precio_estimado": "5.000.000 - 10.000.000 COP",
     "imagenes_detalle": [
-      "./img/baño 2.jpg",
-      "./img/baño 1.jpg"
+      "./img/baño-2.jpg",
+      "./img/baño-1.jpg"
     ],
     "detalles": {
       "titulo": "Materiales y Diseño",
