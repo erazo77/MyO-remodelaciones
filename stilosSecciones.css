@@ -1435,73 +1435,98 @@ h4 {
 .wrapper .cont_controls {
   position: absolute;
   width: 100%;
-  height: 10vh;
+  height: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 7vh;
-  height: 2vh;
-  opacity: 0.6;
+  justify-content: space-between;
+  padding: 0 2vh;
+  opacity: 1;
   font-size: 3vh;
   color: var(--clr-parrafos);
-  bottom: 3vh;
-  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
   pointer-events: none;
 }
 
-#productos-left.contrl_left,
-#productos-right.contrl_rigth {
-  right: 3px;
-  z-index: 2;
+#productos-left.contrl_left {
+  left: -6vh;
+  z-index: 10;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, color;
   backface-visibility: hidden;
   cursor: pointer;
   pointer-events: auto;
-  padding: 0.6vh;
+  padding: 0.8vh;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(23, 23, 23, 0.8);
   backdrop-filter: blur(5px);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  color: var(--clr-segundario);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+#productos-right.contrl_rigth {
+  right: -6vh;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, color;
+  backface-visibility: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+  padding: 0.8vh;
+  border-radius: 50%;
+  background: rgba(23, 23, 23, 0.8);
+  backdrop-filter: blur(5px);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  color: var(--clr-segundario);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .wrapper .contrl_left {
-  right: 3px;
-  z-index: 2;
+  left: -6vh;
+  z-index: 10;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, color;
   backface-visibility: hidden;
   cursor: pointer;
   pointer-events: auto;
-  padding: 0.6vh;
+  padding: 0.8vh;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(23, 23, 23, 0.8);
   backdrop-filter: blur(5px);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  color: var(--clr-segundario);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .wrapper .contrl_rigth {
-  right: 3px;
-  z-index: 2;
+  right: -6vh;
+  z-index: 10;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, color;
   backface-visibility: hidden;
   cursor: pointer;
   pointer-events: auto;
-  padding: 0.6vh;
+  padding: 0.8vh;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(23, 23, 23, 0.8);
   backdrop-filter: blur(5px);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  color: var(--clr-segundario);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .contrl_left:hover {
@@ -1555,7 +1580,8 @@ h4 {
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   scroll-snap-align: start;
-  
+  padding: 0 6vh; /* Space for controls */
+  box-sizing: border-box;
 }
 
 /* //////////acciones manito seleccion sobre conte productos slid/ */
