@@ -2074,7 +2074,7 @@ input[name^="despues-slide"] {
   outline: 2px solid var(--clr-segundario);
   outline-offset: 2px;
 }
-}
+
 
 .pagination {
   position: absolute;
