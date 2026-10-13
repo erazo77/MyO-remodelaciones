@@ -35,7 +35,7 @@ body::-webkit-scrollbar-thumb {
 .contenedor_padre {
   height: 100%;
   background-color: var(--clr-principal);
-  background-image: url('./img/fondo-landing.jpg');
+  background-image: url('./img/fondo_textura_myo.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
