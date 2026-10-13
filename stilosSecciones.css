@@ -667,30 +667,7 @@ padding: 1vh;
   flex-direction: column;
   perspective: 8000px;
   z-index: 10;
-  margin-top: 3vh;
-}
-
-@media (max-width: 900px) {
-  .contenedor_all {
-    height: auto;
-    min-height: 25vh;
-    margin-top: 2vh;
-  }
-  
-  .contenedor_carrusel3d {
-    height: 15vh;
-  }
-}
-
-@media (max-width: 480px) {
-  .contenedor_all {
-    min-height: 20vh;
-    margin-top: 1.5vh;
-  }
-  
-  .contenedor_carrusel3d {
-    height: 12vh;
-  }
+ 
 }
 
 .titulo_carrusel {
