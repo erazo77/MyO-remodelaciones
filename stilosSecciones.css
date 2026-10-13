@@ -1805,7 +1805,6 @@ h4 {
 }
 
 .comparacion_label.antes { color: #e8c56d; }
-.comparacion_label.despues { color: #b2956b; }
 
 .comparacion_label_overlay {
   position: absolute;
@@ -1828,7 +1827,6 @@ h4 {
 }
 
 .comparacion_label_overlay.antes { color: #e8c56d; }
-.comparacion_label_overlay.despues { color: #b2956b; }
 
 .comparacion_slider {
   position: relative;
@@ -1913,15 +1911,9 @@ input[name^="antes-slide"]:checked ~ .pagination .pagination-item[for^="antes"]:
   background: var(--clr-principal);
 }
 
-input[name^="despues-slide"]:checked ~ .pagination .pagination-item[for^="despues"]::before {
-  opacity: 1;
-  background: var(--clr-principal);
-}
-
 /* ===== RADIOS HIDDEN ===== */
 input[name="video-slide"],
-input[name^="antes-slide"],
-input[name^="despues-slide"] {
+input[name^="antes-slide"] {
   display: none;
 }
 
@@ -1936,22 +1928,6 @@ input[name^="despues-slide"] {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-}
-
-.despues,
-.antes {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  z-index: 99;
-  font-size: 2.5vh;
-  font-weight: bold;
-  color: var(--clr-terciario);
-  bottom: 0vh;
-  padding: 1.5vh;
-  text-transform: uppercase;
-  background-color: var(--clr-segundario);
-
 }
 
 .slide {

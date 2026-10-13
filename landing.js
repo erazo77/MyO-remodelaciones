@@ -1304,7 +1304,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const prevBtn = comparacionSlider.querySelector('.slider-nav.prev');
         const nextBtn = comparacionSlider.querySelector('.slider-nav.next');
         const dots = comparacionSlider.querySelectorAll('.pagination .pagination-item');
-        const radios = item.querySelectorAll('input[type="radio"][name^="antes-slide"], input[type="radio"][name^="despues-slide"]');
+        const radios = item.querySelectorAll('input[type="radio"][name^="antes-slide"]');
         
         if (slide && slides.length > 0) {
             let current = 0;
