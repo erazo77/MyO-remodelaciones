@@ -2893,7 +2893,8 @@ margin-top: 5vh;
     right: 0;
     width: 85%;
     height: 100vh;
-    background: var(--clr-principal);
+    background: rgba(23, 23, 23, 0.92);
+    backdrop-filter: blur(12px);
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -2947,7 +2948,7 @@ margin-top: 5vh;
     width: 85%;
     text-align: center;
     border-radius: 1.5vh;
-    background: var(--clr-principal);
+    background: rgba(23, 23, 23, 0.8);
     box-shadow: none;
     color: var(--clr-parrafos);
     text-decoration: none;
@@ -2955,7 +2956,7 @@ margin-top: 5vh;
     align-items: center;
     justify-content: center;
     gap: 1.5vh;
-    border: none;
+    border: 1px solid rgba(178, 149, 107, 0.15);
     position: relative;
     overflow: hidden;
     transition: background 0.3s, color 0.3s;
@@ -2965,7 +2966,7 @@ margin-top: 5vh;
   .nav-menu.active .comentarios:hover,
   .nav-menu.active .Galeria:hover,
   .nav-menu.active .contacto:hover {
-    background: var(--clr-primario);
+    background: rgba(178, 149, 107, 0.9);
     color: var(--clr-blanco);
     box-shadow: none;
     border: none;
@@ -2979,9 +2980,9 @@ margin-top: 5vh;
     padding: 2.5vh 3vh;
     width: 100%;
     border-radius: 1.5vh;
-    background: var(--clr-principal);
+    background: rgba(23, 23, 23, 0.8);
     box-shadow: none;
-    border: none;
+    border: 1px solid rgba(178, 149, 107, 0.15);
     color: var(--clr-parrafos);
     cursor: pointer;
     transition: background 0.3s, color 0.3s;
@@ -2989,7 +2990,7 @@ margin-top: 5vh;
     overflow: hidden;
   }
   .nav-menu.active .boton_propuesta:hover {
-    background: var(--clr-primario);
+    background: rgba(178, 149, 107, 0.9);
     color: var(--clr-blanco);
     box-shadow: none;
     border: none;
@@ -3551,8 +3552,8 @@ margin-top: 5vh;
 
 /* Efectos Neomórficos */
 .cont_etiqueta_acerca {
-  background: var(--clr-principal);
-  border: none;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(178, 149, 107, 0.15);
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4),
               -10px -10px 20px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -3565,8 +3566,8 @@ margin-top: 5vh;
 }
 
 .cont_etiqueta_acerca_twow {
-  background: var(--clr-principal);
-  border: none;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(178, 149, 107, 0.15);
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4),
               -10px -10px 20px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -3579,8 +3580,8 @@ margin-top: 5vh;
 }
 
 .cont_boton_acerca {
-  background: var(--clr-principal);
-  border: none;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(178, 149, 107, 0.15);
   box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
               -6px -6px 12px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -3637,8 +3638,8 @@ margin-top: 5vh;
 
 /* Efecto de hover mejorado para botones */
 .boton_contacto {
-  background: var(--clr-principal);
-  border: none;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(178, 149, 107, 0.15);
   box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
               -6px -6px 12px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -3989,7 +3990,8 @@ margin-top: 5vh;
   transform: translateX(-50%);
   width: 90%;
   max-width: 400px;
-  background: var(--clr-principal);
+  background: rgba(23, 23, 23, 0.92);
+  backdrop-filter: blur(12px);
   border-radius: 2vh 2vh 0 0;
   display: none; /* Oculto por defecto */
   justify-content: space-around;
@@ -3998,8 +4000,7 @@ margin-top: 5vh;
   box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   animation: slideUp 0.3s ease-out;
-  box-shadow: 4px 5px 5px rgba(0, 0, 0, 0.5),
-              -4px -5px 5px rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(178, 149, 107, 0.15);
 }
 
 .nav-item {
