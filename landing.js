@@ -519,10 +519,7 @@ function inicializarSliderAcerca() {
   }
 }
 
-// Inicializar el slider cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-  inicializarSliderAcerca();
-});
+
 /**+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 /**/ ////////////GALERIA 2 sliders +video ////////////////////////////////////////////////////////////////////////*/
