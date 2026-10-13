@@ -1642,42 +1642,6 @@ h4 {
   overflow: hidden;
 }
 
-/* Title overlay on video */
-.titulo_galeria_princi {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: clamp(2rem, 4vw, 3vh);
-  text-align: center;
-  font-weight: 600;
-  z-index: 100;
-  pointer-events: none;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  width: 90%;
-  max-width: 800px;
-  line-height: 1.2;
-}
-
-.video_slider_container {
-  width: 100%;
-  position: relative;
-  border-radius: 1vh;
-  overflow: hidden;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  background: var(--clr-principal);
-}
-
-.video_slider {
-  position: relative;
-  width: 100%;
-  height: 60vh;
-  max-height: 600px;
-  min-height: 400px;
-  overflow: hidden;
-}
-
 .video_slider .slide {
   display: flex;
   position: absolute;
@@ -6189,6 +6153,279 @@ body.active_fondo .bottom-nav .nav-item.active {
   color: #705735;
   background: rgba(178, 149, 107, 0.16);
   box-shadow: none;
+}
+
+/* ===== RESPONSIVE SECTION HEIGHT FIXES ===== */
+
+/* Tablet (<=900px) */
+@media (max-width: 900px) {
+  /* Inicio section */
+  .contenedor_landing {
+    height: auto;
+    min-height: 100vh;
+    padding: 2vh;
+  }
+  
+  .conte_twow {
+    height: auto;
+    min-height: 0;
+    width: 100%;
+  }
+  
+  .cont_incrementadores {
+    height: auto;
+    min-height: 0;
+    padding: 2vh 0;
+    margin-bottom: 2vh;
+  }
+  
+  .wrapper .carousel {
+    height: auto;
+    min-height: 50vh;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .wrapper .cont_controls {
+    margin-top: 2vh;
+    margin-bottom: 3vh;
+  }
+  
+  /* Gallery section */
+  .cont_general_galeria {
+    min-height: auto;
+    padding: 2vh 1vh;
+  }
+  
+  .video_slider {
+    height: 50vh;
+    max-height: 450px;
+    min-height: 350px;
+  }
+  
+  .comparacion_slider {
+    min-height: 350px;
+  }
+  
+  .galeria_comparacion {
+    flex-direction: column;
+    gap: 2vh;
+  }
+  
+  .comparacion_item {
+    min-width: 100%;
+    width: 100%;
+  }
+  
+  /* Propuesta section - already handled */
+  
+  /* Acerca section */
+  .cont_ecerca {
+    height: auto !important;
+    min-height: auto;
+    padding: 2vh;
+  }
+  
+  .cont_left_acerca {
+    height: auto !important;
+    min-height: 60vh;
+    width: 100%;
+  }
+  
+  .contenedor_parrafo_cubo {
+    height: auto !important;
+    min-height: 40vh;
+    width: 90%;
+    max-width: 500px;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    margin: 2vh auto;
+  }
+  
+  .conte_rigth_acerca {
+    height: auto !important;
+    width: 100%;
+    padding: 2vh 0;
+  }
+  
+  .cont_etiqueta_acerca_twow {
+    padding: 2vh 0;
+  }
+  
+  .cont_imgg_etiqueta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vh;
+    justify-content: center;
+  }
+  
+  .img_acerca_twow {
+    width: 45%;
+    min-width: 150px;
+    height: auto;
+  }
+  
+  /* Footer section */
+  .cont_footer {
+    min-height: auto;
+    margin-top: 4vh;
+    padding: 2vh;
+    flex-direction: column;
+  }
+  
+  .sub_cont_footer {
+    height: auto !important;
+    min-height: auto;
+    width: 100%;
+  }
+  
+  .cont_lista_datos {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    min-height: auto;
+    padding: 2vh;
+  }
+}
+
+/* Mobile (<=600px) */
+@media (max-width: 600px) {
+  /* Inicio section */
+  .contenedor_landing {
+    padding: 1.5vh;
+  }
+  
+  .cont_incrementadores {
+    gap: 1vh;
+    padding: 1.5vh 0;
+  }
+  
+  .incre_proyec {
+    width: 10vh;
+    height: 10vh;
+  }
+  
+  .circulo_interno {
+    width: 7vh;
+    height: 7vh;
+  }
+  
+  .capa_proyec {
+    width: 8.5vh;
+    height: 8.5vh;
+  }
+  
+  .titulo_circulo {
+    font-size: 1.1vh;
+  }
+  
+  .numer_circulo {
+    font-size: 1.6vh;
+  }
+  
+  .wrapper .carousel {
+    min-height: 45vh;
+    gap: 1.5vh;
+  }
+  
+  .producto {
+    min-width: 280px;
+  }
+  
+  /* Gallery section */
+  .video_slider {
+    height: 40vh;
+    max-height: 350px;
+    min-height: 280px;
+  }
+  
+  .comparacion_slider {
+    min-height: 300px;
+    padding: 1vh;
+  }
+  
+  .comparacion_slider .slider-nav {
+    width: 4vh;
+    height: 4vh;
+    font-size: 2vh;
+  }
+  
+  /* Acerca section */
+  .cont_left_acerca {
+    min-height: 50vh;
+  }
+  
+  .contenedor_parrafo_cubo {
+    min-height: 35vh;
+    width: 95%;
+    font-size: 1.5vh;
+    line-height: 2.5vh;
+    padding: 2vh;
+  }
+  
+  .conte_rigth_acerca {
+    padding: 1.5vh 0;
+  }
+  
+  .img_acerca_twow {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  /* Footer section */
+  .cont_footer {
+    padding: 1.5vh;
+    margin-top: 2vh;
+  }
+  
+  .cont_lista_datos {
+    width: 100%;
+    padding: 1.5vh;
+  }
+  
+  .item_datos {
+    font-size: 1.3vh;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .item_datos i {
+    font-size: 1.8vh;
+  }
+  
+  .titulo_contacto_footer {
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+/* Very small mobile (<=480px) */
+@media (max-width: 480px) {
+  .video_slider {
+    height: 35vh;
+    max-height: 300px;
+    min-height: 240px;
+  }
+  
+  .comparacion_slider {
+    min-height: 280px;
+  }
+  
+  .wrapper .carousel {
+    min-height: 40vh;
+  }
+  
+  .cont_left_acerca {
+    min-height: 45vh;
+  }
+  
+  .contenedor_parrafo_cubo {
+    min-height: 30vh;
+    font-size: 1.3vh;
+    line-height: 2.2vh;
+    padding: 1.5vh;
+  }
 }
 
 
