@@ -794,7 +794,84 @@ h4 {
   display: none;
 }
 
-.cont_incrementadores {
+/* ===== RESPONSIVE GALLERY TITLE ===== */
+@media (max-width: 900px) {
+  .galeria_video_hero {
+    padding: 1vh;
+    gap: 1vh;
+  }
+  
+  .video_slider {
+    height: 50vh;
+    max-height: 400px;
+    min-height: 300px;
+  }
+  
+  .titulo_galeria_princi {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    width: 95%;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .galeria_video_hero {
+    padding: 1vh;
+    gap: 0.5vh;
+  }
+  
+  .titulo_galeria_princi {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    width: 95%;
+    max-width: 95%;
+  }
+  
+  .video_slider {
+    height: 40vh;
+    max-height: 300px;
+    min-height: 240px;
+  }
+  
+  .video_cento {
+    height: 100%;
+    min-height: 200px;
+  }
+  
+  .slider-nav {
+    width: 4vh;
+    height: 4vh;
+    font-size: 1.8vh;
+  }
+  
+  .slider-nav.prev { left: 0.5vh; }
+  .slider-nav.next { right: 0.5vh; }
+  
+  .video_slider .slider-nav {
+    width: 3.5vh;
+    height: 3.5vh;
+    font-size: 1.5vh;
+  }
+  
+  .comparacion_slider {
+    min-height: 300px;
+  }
+  
+  .cont_left_galeria,
+  .cont_rigth_galeria {
+    height: 35vh;
+    transform: rotateY(10deg);
+    margin-top: 0;
+  }
+}
+
+/* ===== RESPONSIVE SLIDER NAV ===== */
+@media (max-width: 768px) {
+  .slider-nav {
+    display: none;
+  }
+}
+
+  .cont_incrementadores {
   position: absolute;
   width: 100%;
   height: 20vh;
@@ -1574,12 +1651,40 @@ h4 {
   padding: 2vh;
 }
 
+.video_slider_container {
+  width: 100%;
+  position: relative;
+  border-radius: 1vh;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  background: var(--clr-principal);
+}
+
+.video_slider {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  max-height: 600px;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+/* Title overlay on video */
 .titulo_galeria_princi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: clamp(2rem, 4vw, 3vh);
   text-align: center;
-  margin-bottom: 1.5vh;
   font-weight: 600;
+  z-index: 100;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  width: 90%;
+  max-width: 800px;
+  line-height: 1.2;
 }
 
 .video_slider_container {
