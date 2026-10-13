@@ -1736,22 +1736,18 @@ h4 {
   opacity: 1;
 }
 
-/* Radio-controlled pagination active state */
-input[id^="antes"]:checked ~ .comparacion_slider .pagination .pagination-item[for^="antes"]::before,
-input[id^="despues"]:checked ~ .comparacion_slider .pagination .pagination-item[for^="despues"]::before {
+/* Radio-controlled pagination active state - radios are BEFORE pagination in HTML */
+input[name="video-slide"]:checked ~ .pagination .pagination-item[for^="video"]::before {
   opacity: 1;
   background: var(--clr-principal);
 }
 
-/* ===== PAGINATION RADIOS ===== */
-input[name^="antes-slide"]:checked + .comparacion_slider .pagination .pagination-item[for^="antes"]::before,
-input[name^="despues-slide"]:checked + .comparacion_slider .pagination .pagination-item[for^="despues"]::before {
+input[name^="antes-slide"]:checked ~ .pagination .pagination-item[for^="antes"]::before {
   opacity: 1;
   background: var(--clr-principal);
 }
 
-/* Video pagination */
-input[name="video-slide"]:checked ~ .video_slider .pagination .pagination-item[for^="video"]::before {
+input[name^="despues-slide"]:checked ~ .pagination .pagination-item[for^="despues"]::before {
   opacity: 1;
   background: var(--clr-principal);
 }
