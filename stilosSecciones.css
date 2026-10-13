@@ -779,8 +779,8 @@ h4 {
 .conte_twow {
   position: relative;
   width: 50%;
-  height: 95%;
-
+  height: 85vh;
+  max-height: 85vh;
 }
 
 .logo_pequeño {
