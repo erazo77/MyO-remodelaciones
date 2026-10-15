@@ -725,25 +725,50 @@ function inicializarAyudaEscritura(formulario) {
     formulario.addEventListener('reset', limpiarTodo);
 }
 
-// Referencia aleatoria: no es un consecutivo centralizado ni una cotización aprobada.
-function generarNumeroCotizacion() {
-    if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') throw new Error('No hay generador seguro de referencias disponible');
-    const partes = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Bogota', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
-    const fecha = ['year', 'month', 'day'].map((tipo) => partes.find((p) => p.type === tipo).value).join('');
+// Consecutivo global asignado por el servidor; no constituye una cotización aprobada.
+function crearClaveSolicitudCotizacion() {
+    if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') throw new Error('No hay generador seguro disponible.');
     const bytes = new Uint8Array(16);
     window.crypto.getRandomValues(bytes);
-    const aleatorio = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('').toUpperCase();
-    return 'MYO-' + fecha + '-' + aleatorio;
+    // Clave interna para reintentos; el número visible SOLO lo asigna el servidor.
+    return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function obtenerNumeroCotizacion(formulario) {
+
+async function obtenerNumeroCotizacion(formulario) {
     const campo = formulario.elements.numero_cotizacion;
-    if (!campo) throw new Error('Falta el campo de referencia');
-    if (!campo.value) campo.value = generarNumeroCotizacion();
+    if (!campo) throw new Error('Falta el campo de referencia.');
     const visible = document.getElementById('numeroCotizacionVisible');
-    if (visible) visible.textContent = campo.value;
-    return campo.value;
+    if (/^[0-9]{4,10}$/.test(campo.value)) {
+        if (visible) visible.textContent = campo.value;
+        return campo.value;
+    }
+    if (!formulario.dataset.cotizacionRequestKey) formulario.dataset.cotizacionRequestKey = crearClaveSolicitudCotizacion();
+    if (visible) visible.textContent = 'Asignando número de cotización…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+        const respuesta = await fetch(NUMERO_COTIZACION_URL, {
+            method: 'POST',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ request_id: formulario.dataset.cotizacionRequestKey }),
+            signal: controller.signal
+        });
+        const resultado = await respuesta.json();
+        if (!respuesta.ok || resultado.success !== true || typeof resultado.numero !== 'string' || !/^[0-9]{4,10}$/.test(resultado.numero)) {
+            throw new Error('No se pudo obtener una referencia válida del servidor.');
+        }
+        campo.value = resultado.numero;
+        if (visible) visible.textContent = resultado.numero;
+        return resultado.numero;
+    } finally {
+        clearTimeout(timeout);
+        if (!campo.value && visible) visible.textContent = 'Se asignará al enviar tu solicitud';
+    }
 }
+
 
 function mostrarResultadoCotizacion(cotizacion, mensaje, estado) {
     const panel = document.getElementById('cotizacionResultado');
@@ -801,6 +826,7 @@ function inicializarFormulario() {
     formulario.addEventListener('reset', () => {
         const referencia = formulario.elements.numero_cotizacion;
         if (referencia) referencia.value = '';
+        delete formulario.dataset.cotizacionRequestKey;
         const visible = document.getElementById('numeroCotizacionVisible');
         if (visible) visible.textContent = 'Se asignará al enviar tu solicitud';
     });
@@ -1025,8 +1051,9 @@ function inicializarPasosFormulario(formulario) {
     irAPaso(0, false);
 }
 
+const NUMERO_COTIZACION_URL = './api/cotizacion-numero.php';
 const WHATSAPP_COTIZACION = '573107634934';
-const CORREO_COTIZACION = 'contacto@myo-remodelaciones.com';
+const FORM_SUBMIT_COTIZACION_URL = 'https://formsubmit.co/ajax/37075257ed4a709dc858706075d2037d';
 
 function textoOpcionSelect(select) {
     if (!select || !select.value || !select.selectedOptions || !select.selectedOptions[0]) {
@@ -1040,16 +1067,15 @@ function textoLibre(valor, respaldo = 'No indicado') {
     return texto || respaldo;
 }
 
-function recopilarDatosCotizacion(formulario) {
+async function recopilarDatosCotizacion(formulario) {
     const datos = new FormData(formulario);
     const canales = [
         datos.has('contacto_whatsapp') ? 'WhatsApp' : null,
         datos.has('contacto_llamada') ? 'Llamada' : null,
         datos.has('contacto_email') ? 'Correo electrónico' : null
     ].filter(Boolean);
-
-    return {
-        numero: obtenerNumeroCotizacion(formulario),
+    // Capturar los datos antes de esperar la respuesta del servidor.
+    const cotizacion = {
         modalidad: textoOpcionSelect(formulario.elements.modalidad_contratacion),
         nombre: textoLibre(datos.get('nombre')),
         telefono: textoLibre(datos.get('telefono')),
@@ -1060,13 +1086,12 @@ function recopilarDatosCotizacion(formulario) {
         tiempoProyecto: textoOpcionSelect(formulario.elements.tiempo_proyecto),
         descripcion: textoLibre(datos.get('descripcion'), 'Sin descripción adicional'),
         contactoPreferido: canales.length ? canales.join(', ') : 'Por definir',
-        fecha: new Date().toLocaleString('es-CO', {
-            timeZone: 'America/Bogota',
-            dateStyle: 'long',
-            timeStyle: 'short'
-        })
+        fecha: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota', dateStyle: 'long', timeStyle: 'short' })
     };
+    cotizacion.numero = await obtenerNumeroCotizacion(formulario);
+    return cotizacion;
 }
+
 
 function armarMensajeWhatsApp(cotizacion) {
     return [
@@ -1100,24 +1125,36 @@ function armarMensajeWhatsApp(cotizacion) {
     ].join('\n');
 }
 
-function abrirWhatsAppCotizacion(mensaje) {
-    // Abrir durante el clic, antes de cualquier espera, reduce los bloqueos de ventanas.
-    const url = 'https://wa.me/' + WHATSAPP_COTIZACION + '?text=' + encodeURIComponent(mensaje);
+function prepararVentanaWhatsAppCotizacion() {
+    // Se abre antes de esperar al servidor para reducir bloqueos del navegador.
     let ventana = null;
     try {
         ventana = window.open('about:blank', '_blank');
-        if (!ventana) return false;
+        if (!ventana) return null;
         ventana.opener = null;
-        ventana.location.replace(url);
+        ventana.document.title = 'Preparando tu solicitud';
+        ventana.document.body.textContent = 'Estamos asignando el número de cotización. Espera un momento…';
+        return ventana;
+    } catch (error) {
+        try { if (ventana) ventana.close(); } catch (ignorado) { /* No afecta al enlace manual. */ }
+        return null;
+    }
+}
+
+function abrirWhatsAppCotizacion(mensaje, ventana) {
+    if (!ventana || ventana.closed) return false;
+    try {
+        ventana.location.replace('https://wa.me/' + WHATSAPP_COTIZACION + '?text=' + encodeURIComponent(mensaje));
         return true;
     } catch (error) {
-        try { if (ventana) ventana.close(); } catch (ignorado) { /* El enlace de respaldo sigue disponible. */ }
+        try { ventana.close(); } catch (ignorado) { /* El comprobante conserva el enlace manual. */ }
         return false;
     }
 }
 
+
 async function enviarCorreoCotizacion(cotizacion) {
-    const respuesta = await fetch(`https://formsubmit.co/ajax/${CORREO_COTIZACION}`, {
+    const respuesta = await fetch(FORM_SUBMIT_COTIZACION_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1160,24 +1197,31 @@ async function manejarEnvioFormulario(event) {
     const btnEnviar = formulario.querySelector('.btn_enviar_formulario');
     if (!btnEnviar || btnEnviar.disabled) return;
     if (formulario.elements._honey && formulario.elements._honey.value.trim()) return;
-    const campos = formulario.querySelectorAll('input[required], select[required], textarea[required]');
     let esValido = true;
-    campos.forEach((campo) => { if (!validarCampo({ target: campo })) esValido = false; });
+    formulario.querySelectorAll('input[required], select[required], textarea[required]').forEach(campo => {
+        if (!validarCampo({ target: campo })) esValido = false;
+    });
     if (!esValido) {
         mostrarNotificacion('Por favor, completa todos los campos requeridos, incluida la modalidad de contratación.', 'error');
         return;
     }
-    let cotizacion;
-    try { cotizacion = recopilarDatosCotizacion(formulario); }
-    catch (error) {
-        mostrarNotificacion('No pudimos generar la referencia. Recarga la página e inténtalo de nuevo; si persiste, contáctanos directamente.', 'error');
-        return;
-    }
-    const mensajeWhatsApp = armarMensajeWhatsApp(cotizacion);
     btnEnviar.classList.add('loading');
     btnEnviar.disabled = true;
     formulario.setAttribute('aria-busy', 'true');
-    const whatsappAbierto = abrirWhatsAppCotizacion(mensajeWhatsApp);
+    const ventanaWhatsApp = prepararVentanaWhatsAppCotizacion();
+    let cotizacion;
+    try {
+        cotizacion = await recopilarDatosCotizacion(formulario);
+    } catch (error) {
+        try { if (ventanaWhatsApp) ventanaWhatsApp.close(); } catch (ignorado) { /* No había una ventana accesible. */ }
+        btnEnviar.classList.remove('loading');
+        btnEnviar.disabled = false;
+        formulario.removeAttribute('aria-busy');
+        mostrarNotificacion('No pudimos asignar el número de cotización. Conservamos tus datos: espera un momento e inténtalo de nuevo. No se ha enviado esta solicitud.', 'error');
+        return;
+    }
+    const mensajeWhatsApp = armarMensajeWhatsApp(cotizacion);
+    const whatsappAbierto = abrirWhatsAppCotizacion(mensajeWhatsApp, ventanaWhatsApp);
     mostrarResultadoCotizacion(cotizacion, mensajeWhatsApp, 'Solicitud preparada. Estamos intentando enviarla por correo. En WhatsApp debes pulsar Enviar para completar el contacto.');
     let correoEnviado = false;
     try {
@@ -1195,8 +1239,7 @@ async function manejarEnvioFormulario(event) {
         formulario.reset();
         estado = 'El servicio de correo confirmó la recepción de tu solicitud. ' + (whatsappAbierto ? 'WhatsApp se abrió con la misma referencia: pulsa Enviar en el chat.' : 'También puedes usar el enlace de abajo para enviarla por WhatsApp.');
     } else {
-        // Mantener datos y número permite reintentar sin perder la solicitud.
-        estado = 'No pudimos confirmar el envío por correo. Conservamos tus datos y la misma referencia para reintentar. ' + (whatsappAbierto ? 'Pulsa Enviar en WhatsApp para completar el contacto.' : 'Usa el enlace de abajo para abrir WhatsApp y pulsa Enviar en el chat.');
+        estado = 'No pudimos confirmar el envío por correo. Conservamos tus datos y el mismo número para reintentar. ' + (whatsappAbierto ? 'Pulsa Enviar en WhatsApp para completar el contacto.' : 'Usa el enlace de abajo para abrir WhatsApp y pulsa Enviar en el chat.');
     }
     mostrarResultadoCotizacion(cotizacion, mensajeWhatsApp, estado);
     mostrarNotificacion('Cotización ' + cotizacion.numero + '. ' + estado, correoEnviado ? 'success' : 'error');
