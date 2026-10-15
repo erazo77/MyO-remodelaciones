@@ -165,17 +165,21 @@ function cargar_productos(productoElegidos) {
     return firstCard.clientWidth + gap;
   };
 
+  if (!leftArrow.dataset.listo) {
+  leftArrow.dataset.listo = "1";
   leftArrow.addEventListener("click", () => {
     const scrollAmount = getSmoothScrollAmount();
     if (scrollAmount === 0) return;
-    carousel.scrollLeft -= scrollAmount;
+    carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
   });
 
   rightArrow.addEventListener("click", () => {
     const scrollAmount = getSmoothScrollAmount();
     if (scrollAmount === 0) return;
-    carousel.scrollLeft += scrollAmount;
+    carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
   });
+  }
+  if (typeof showHideIcons === "function") setTimeout(showHideIcons, 50);
 }
 
 /**+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -241,10 +245,11 @@ let isDragStart = false,
 
 // Función para mostrar u ocultar las flechas de navegación
 const showHideIcons = () => {
-  let scrollWidth = carousel.scrollWidth - carousel.clientWidth;
-  arrowIcons[0].style.display = carousel.scrollLeft == 0 ? "none" : "block";
-  arrowIcons[1].style.display =
-    carousel.scrollLeft == scrollWidth ? "none" : "block";
+  const scrollWidth = carousel.scrollWidth - carousel.clientWidth;
+  const left = document.getElementById("productos-left");
+  const right = document.getElementById("productos-right");
+  if (left) left.classList.toggle("control_oculto", carousel.scrollLeft <= 2);
+  if (right) right.classList.toggle("control_oculto", carousel.scrollLeft >= scrollWidth - 2);
 };
 
 // Función para calcular el desplazamiento suave del carousel
@@ -275,21 +280,8 @@ const alignCarousel = () => {
   }
 };
 
-// Event listeners para los íconos de flecha
-arrowIcons.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const scrollAmount = getSmoothScrollAmount();
-    if (scrollAmount === 0) return;
-    
-    carousel.scrollLeft += icon.id == "left" ? -scrollAmount : scrollAmount; // Desplazamiento suave
-    
-    // Alinear el carousel después del desplazamiento
-    setTimeout(() => {
-      alignCarousel();
-      showHideIcons();
-    }, 100);
-  });
-});
+// Las flechas (#productos-left / #productos-right) se enlazan en cargar_productos()
+carousel.addEventListener("scroll", () => showHideIcons(), { passive: true });
 
 // Función para desplazamiento automático
 const autoSlide = () => {
@@ -587,10 +579,11 @@ function iniciarContadores() {
     const valorMaximo = parseInt(elemento.getAttribute("data-maximo")) || 100;
     let valor = valorInicial;
     let subiendo = true;
-    let animacionActiva = true;
+    let animacionActiva = false;
+    let corriendo = false;
 
     function animarNumero() {
-      if (!animacionActiva) return;
+      if (!animacionActiva) { corriendo = false; return; }
       
       if (subiendo) {
         valor++;
@@ -613,7 +606,7 @@ function iniciarContadores() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           animacionActiva = true;
-    animarNumero();
+          if (!corriendo) { corriendo = true; animarNumero(); }
         } else {
           animacionActiva = false;
         }
@@ -659,7 +652,107 @@ function handleScrollAnimations() {
                 element.style.animation = `fadeInRight 1.2s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s forwards`;
                     }
     }
-});
+    });
+}
+
+// Revisión local orientativa: no envía textos a servicios externos.
+function sugerirMejorasEscritura(texto) {
+    const diccionario = {
+        nesecito: 'necesito', nesesito: 'necesito', presio: 'precio', presios: 'precios',
+        cotisacion: 'cotización', cotizacion: 'cotización', remodelacion: 'remodelación',
+        reparacion: 'reparación', instalacion: 'instalación', habitacion: 'habitación',
+        bano: 'baño', banos: 'baños', diseno: 'diseño', disenos: 'diseños',
+        plomeria: 'plomería', tuberia: 'tubería', tuberias: 'tuberías',
+        electrico: 'eléctrico', electricos: 'eléctricos', electrica: 'eléctrica', electricas: 'eléctricas',
+        ceramica: 'cerámica', ceramicas: 'cerámicas', iluminacion: 'iluminación',
+        impermeabilizacion: 'impermeabilización', demolicion: 'demolición', construccion: 'construcción',
+        ampliacion: 'ampliación', descripcion: 'descripción', asesoria: 'asesoría'
+    };
+    const cambios = [];
+    const vistos = new Set();
+    const corregido = String(texto).replace(/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+/g, (palabra) => {
+        const clave = palabra.toLocaleLowerCase('es-CO');
+        if (!Object.prototype.hasOwnProperty.call(diccionario, clave)) return palabra;
+        let reemplazo = diccionario[clave];
+        if (palabra === palabra.toLocaleUpperCase('es-CO')) reemplazo = reemplazo.toLocaleUpperCase('es-CO');
+        else if (palabra[0] === palabra[0].toLocaleUpperCase('es-CO')) reemplazo = reemplazo[0].toLocaleUpperCase('es-CO') + reemplazo.slice(1);
+        if (reemplazo !== palabra && !vistos.has(palabra)) {
+            vistos.add(palabra);
+            cambios.push({ original: palabra, sugerencia: reemplazo });
+        }
+        return reemplazo;
+    });
+    return { texto: corregido, cambios };
+}
+
+function inicializarAyudaEscritura(formulario) {
+    const campo = formulario.elements.descripcion;
+    const revisar = document.getElementById('revisarEscritura');
+    const aplicar = document.getElementById('aplicarEscritura');
+    const cancelar = document.getElementById('cancelarEscritura');
+    const deshacer = document.getElementById('deshacerEscritura');
+    const panel = document.getElementById('escrituraSugerencias');
+    const lista = document.getElementById('listaSugerenciasEscritura');
+    const estado = document.getElementById('escrituraEstado');
+    if (!campo || !revisar || !aplicar || !cancelar || !deshacer || !panel || !lista || !estado) return;
+    let propuesta = null;
+    let anterior = null;
+    function limpiarRevision() { propuesta = null; panel.hidden = true; lista.textContent = ''; }
+    function limpiarTodo() { limpiarRevision(); anterior = null; deshacer.hidden = true; estado.textContent = ''; }
+    campo.addEventListener('input', limpiarTodo);
+    revisar.addEventListener('click', () => {
+        limpiarRevision();
+        if (!campo.value.trim()) { estado.textContent = 'Escribe primero una descripción de tu proyecto.'; campo.focus({ preventScroll: true }); return; }
+        const resultado = sugerirMejorasEscritura(campo.value);
+        if (!resultado.cambios.length) { estado.textContent = 'No encontramos errores en nuestra lista de palabras frecuentes. Esto no garantiza que no haya otros errores; revisa también las sugerencias de tu navegador.'; return; }
+        propuesta = { original: campo.value, resultado };
+        resultado.cambios.forEach((cambio) => { const item = document.createElement('li'); item.textContent = cambio.original + ' → ' + cambio.sugerencia; lista.appendChild(item); });
+        panel.hidden = false;
+        estado.textContent = 'Encontramos ' + resultado.cambios.length + ' posibles mejoras. Revísalas antes de aplicarlas.';
+    });
+    aplicar.addEventListener('click', () => {
+        if (!propuesta || campo.value !== propuesta.original) { limpiarRevision(); estado.textContent = 'Tu texto cambió. Pulsa Revisar escritura de nuevo.'; return; }
+        const original = campo.value;
+        campo.value = propuesta.resultado.texto;
+        campo.dispatchEvent(new Event('input', { bubbles: true }));
+        anterior = original;
+        deshacer.hidden = false;
+        estado.textContent = 'Sugerencias aplicadas. Puedes deshacerlas antes de seguir escribiendo.';
+        revisar.focus({ preventScroll: true });
+    });
+    cancelar.addEventListener('click', () => { limpiarRevision(); estado.textContent = 'Conservamos tu descripción sin cambios.'; revisar.focus({ preventScroll: true }); });
+    deshacer.addEventListener('click', () => { if (anterior === null) return; campo.value = anterior; campo.dispatchEvent(new Event('input', { bubbles: true })); estado.textContent = 'Restauramos tu descripción original.'; campo.focus({ preventScroll: true }); });
+    formulario.addEventListener('reset', limpiarTodo);
+}
+
+// Referencia aleatoria: no es un consecutivo centralizado ni una cotización aprobada.
+function generarNumeroCotizacion() {
+    if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') throw new Error('No hay generador seguro de referencias disponible');
+    const partes = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Bogota', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+    const fecha = ['year', 'month', 'day'].map((tipo) => partes.find((p) => p.type === tipo).value).join('');
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    const aleatorio = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('').toUpperCase();
+    return 'MYO-' + fecha + '-' + aleatorio;
+}
+
+function obtenerNumeroCotizacion(formulario) {
+    const campo = formulario.elements.numero_cotizacion;
+    if (!campo) throw new Error('Falta el campo de referencia');
+    if (!campo.value) campo.value = generarNumeroCotizacion();
+    const visible = document.getElementById('numeroCotizacionVisible');
+    if (visible) visible.textContent = campo.value;
+    return campo.value;
+}
+
+function mostrarResultadoCotizacion(cotizacion, mensaje, estado) {
+    const panel = document.getElementById('cotizacionResultado');
+    if (!panel) return;
+    document.getElementById('cotizacionResultadoNumero').textContent = cotizacion.numero;
+    document.getElementById('cotizacionResultadoEstado').textContent = estado;
+    document.getElementById('cotizacionResultadoWhatsApp').href = 'https://wa.me/' + WHATSAPP_COTIZACION + '?text=' + encodeURIComponent(mensaje);
+    panel.hidden = false;
+}
 
 // ==================== FUNCIONALIDAD DEL FORMULARIO ====================
 
@@ -701,6 +794,16 @@ function inicializarFormulario() {
     
     // Manejo del envío del formulario
     formulario.addEventListener('submit', manejarEnvioFormulario);
+
+    // Formulario en pasos (slider)
+    inicializarPasosFormulario(formulario);
+    inicializarAyudaEscritura(formulario);
+    formulario.addEventListener('reset', () => {
+        const referencia = formulario.elements.numero_cotizacion;
+        if (referencia) referencia.value = '';
+        const visible = document.getElementById('numeroCotizacionVisible');
+        if (visible) visible.textContent = 'Se asignará al enviar tu solicitud';
+    });
     
     // Animación de focus en inputs
     inputs.forEach(input => {
@@ -764,7 +867,16 @@ function validarCampo(event) {
     const campo = event.target;
     const valor = campo.value.trim();
     const esRequerido = campo.hasAttribute('required');
-    
+
+    if (campo.type === 'checkbox') {
+        if (esRequerido && !campo.checked) {
+            mostrarError(campo, 'Debes aceptar para continuar');
+            return false;
+        }
+        limpiarError(campo);
+        return true;
+    }
+
     if (esRequerido && !valor) {
         mostrarError(campo, 'Este campo es requerido');
         return false;
@@ -794,68 +906,300 @@ function validarCampo(event) {
 // Función para mostrar errores
 function mostrarError(campo, mensaje) {
     const formGroup = campo.closest('.form_group');
+    if (!formGroup) return;
     const validation = formGroup.querySelector('.form_validation');
-    
-    campo.style.borderColor = '#ff6b6b';
+
+    campo.classList.add('campo_error');
+    campo.setAttribute('aria-invalid', 'true');
     if (validation) {
-        validation.innerHTML = `<span style="color: #ff6b6b; font-size: 1vh;">${mensaje}</span>`;
+        validation.textContent = mensaje;
+        validation.setAttribute('role', 'alert');
     }
 }
 
-// Función para limpiar errores
-function limpiarError(campo) {
+// Función para limpiar errores (acepta un campo o un evento)
+function limpiarError(arg) {
+    const campo = arg && arg.target ? arg.target : arg;
+    if (!campo || !campo.closest) return;
     const formGroup = campo.closest('.form_group');
+    if (!formGroup) return;
     const validation = formGroup.querySelector('.form_validation');
-    
-    campo.style.borderColor = 'rgba(247, 218, 103, 0.3)';
+
+    campo.classList.remove('campo_error');
+    campo.removeAttribute('aria-invalid');
     if (validation) {
-        validation.innerHTML = '';
+        validation.textContent = '';
     }
 }
 
-// Función para manejar el envío del formulario
-function manejarEnvioFormulario(event) {
-    event.preventDefault();
-    
-    const formulario = event.target;
+// ==================== FORMULARIO EN PASOS ====================
+function inicializarPasosFormulario(formulario) {
+    const viewport = formulario.querySelector('.form_pasos');
+    const track = formulario.querySelector('.form_pasos_track');
+    const pasos = Array.from(formulario.querySelectorAll('.form_paso'));
+    const items = Array.from(formulario.querySelectorAll('.form_progreso_item'));
+    const linea = formulario.querySelector('.form_progreso_linea');
+    const btnAtras = formulario.querySelector('.btn_form_atras');
+    const btnSiguiente = formulario.querySelector('.btn_form_siguiente');
     const btnEnviar = formulario.querySelector('.btn_enviar_formulario');
-    const campos = formulario.querySelectorAll('input[required], select[required], textarea[required]');
-    
-    // Validar todos los campos requeridos
-    let esValido = true;
-    campos.forEach(campo => {
-        if (!validarCampo({ target: campo })) {
-            esValido = false;
+    if (!viewport || !track || pasos.length < 2) return;
+
+    const ultimo = pasos.length - 1;
+    let actual = 0;
+
+    function ajustarAltura() {
+        viewport.style.height = pasos[actual].offsetHeight + 'px';
+    }
+
+    function validarPaso(indice) {
+        let ok = true;
+        let primero = null;
+        pasos[indice].querySelectorAll('input[required], select[required], textarea[required]').forEach(campo => {
+            const valido = validarCampo({ target: campo });
+            if (!valido) {
+                ok = false;
+                if (!primero) primero = campo;
+            }
+        });
+        if (primero) primero.focus({ preventScroll: true });
+        return ok;
+    }
+
+    function irAPaso(indice, enfocar = true) {
+        actual = Math.max(0, Math.min(ultimo, indice));
+        track.style.transform = `translateX(-${actual * 100}%)`;
+        pasos.forEach((paso, i) => {
+            const activo = i === actual;
+            paso.classList.toggle('activo', activo);
+            paso.toggleAttribute('inert', !activo);
+            paso.setAttribute('aria-hidden', activo ? 'false' : 'true');
+        });
+        items.forEach((item, i) => {
+            item.classList.toggle('activo', i === actual);
+            item.classList.toggle('completo', i < actual);
+        });
+        if (linea) linea.classList.toggle('completa', actual > 0);
+        btnAtras.hidden = actual === 0;
+        btnSiguiente.hidden = actual === ultimo;
+        btnEnviar.hidden = actual !== ultimo;
+        ajustarAltura();
+        if (enfocar) {
+            const campo = pasos[actual].querySelector('input, select, textarea');
+            setTimeout(() => campo && campo.focus({ preventScroll: true }), 350);
+            const caja = formulario.closest('.cont_formulario_footer') || formulario;
+            const arriba = caja.getBoundingClientRect().top;
+            if (arriba < 0 || arriba > window.innerHeight * 0.4) {
+                caja.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+
+    btnSiguiente.addEventListener('click', () => {
+        if (validarPaso(actual)) irAPaso(actual + 1);
+    });
+    btnAtras.addEventListener('click', () => irAPaso(actual - 1));
+
+    // Enter en un campo del paso 1 avanza en vez de enviar
+    formulario.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && actual < ultimo && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            btnSiguiente.click();
         }
     });
-    
-    if (!esValido) {
-        mostrarNotificacion('Por favor, completa todos los campos requeridos', 'error');
-        return;
+
+    // Permite volver tocando el paso 1 del indicador
+    items.forEach((item, i) => {
+        item.addEventListener('click', () => {
+            if (i < actual) irAPaso(i);
+            else if (i === actual + 1 && validarPaso(actual)) irAPaso(i);
+        });
+    });
+
+    window.addEventListener('resize', ajustarAltura);
+    if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(ajustarAltura);
+        pasos.forEach(p => ro.observe(p));
     }
-    
+    formulario.addEventListener('reset', () => irAPaso(0, false));
+
+    irAPaso(0, false);
+}
+
+const WHATSAPP_COTIZACION = '573107634934';
+const CORREO_COTIZACION = 'contacto@myo-remodelaciones.com';
+
+function textoOpcionSelect(select) {
+    if (!select || !select.value || !select.selectedOptions || !select.selectedOptions[0]) {
+        return 'No indicado';
+    }
+    return select.selectedOptions[0].text.trim();
+}
+
+function textoLibre(valor, respaldo = 'No indicado') {
+    const texto = String(valor || '').trim();
+    return texto || respaldo;
+}
+
+function recopilarDatosCotizacion(formulario) {
     const datos = new FormData(formulario);
     const canales = [
-      datos.has('contacto_whatsapp') ? 'WhatsApp' : null,
-      datos.has('contacto_llamada') ? 'Llamada' : null,
-      datos.has('contacto_email') ? 'Correo electrónico' : null
+        datos.has('contacto_whatsapp') ? 'WhatsApp' : null,
+        datos.has('contacto_llamada') ? 'Llamada' : null,
+        datos.has('contacto_email') ? 'Correo electrónico' : null
     ].filter(Boolean);
-    const mensaje = [
-      'Hola, quiero solicitar un presupuesto para un proyecto de M&O Remodelaciones y Acabados.',
-      '',
-      `Nombre: ${datos.get('nombre')}`,
-      `Teléfono: ${datos.get('telefono')}`,
-      `Correo: ${datos.get('email')}`,
-      `Ciudad: ${datos.get('ciudad')}`,
-      `Proyecto: ${formulario.elements.tipo_proyecto.selectedOptions[0].text}`,
-      `Presupuesto: ${formulario.elements.presupuesto.selectedOptions[0].text}`,
-      `Tiempo deseado: ${formulario.elements.tiempo_proyecto.selectedOptions[0].text}`,
-      `Descripción: ${datos.get('descripcion') || 'Sin descripción adicional'}`,
-      `Contacto preferido: ${canales.length ? canales.join(', ') : 'Por definir'}`
-    ].join('\n');
 
-    window.open(`https://wa.me/573028463974?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
-    mostrarNotificacion('WhatsApp se abrió con tu solicitud. Revísala y pulsa Enviar para completar el contacto.', 'success');
+    return {
+        numero: obtenerNumeroCotizacion(formulario),
+        modalidad: textoOpcionSelect(formulario.elements.modalidad_contratacion),
+        nombre: textoLibre(datos.get('nombre')),
+        telefono: textoLibre(datos.get('telefono')),
+        email: textoLibre(datos.get('email')),
+        ciudad: textoLibre(datos.get('ciudad')),
+        tipoProyecto: textoOpcionSelect(formulario.elements.tipo_proyecto),
+        presupuesto: textoOpcionSelect(formulario.elements.presupuesto),
+        tiempoProyecto: textoOpcionSelect(formulario.elements.tiempo_proyecto),
+        descripcion: textoLibre(datos.get('descripcion'), 'Sin descripción adicional'),
+        contactoPreferido: canales.length ? canales.join(', ') : 'Por definir',
+        fecha: new Date().toLocaleString('es-CO', {
+            timeZone: 'America/Bogota',
+            dateStyle: 'long',
+            timeStyle: 'short'
+        })
+    };
+}
+
+function armarMensajeWhatsApp(cotizacion) {
+    return [
+        '🏗️ *Nueva solicitud de cotización*',
+        '*M&O Remodelaciones y Acabados*',
+        '',
+        `📅 ${cotizacion.fecha}`,
+        `🔖 *N.º de cotización: ${cotizacion.numero}*`,
+        '',
+        '━━━━━━━━━━━━━━',
+        '👤 *Datos del cliente*',
+        `• Nombre: ${cotizacion.nombre}`,
+        `• Teléfono: ${cotizacion.telefono}`,
+        `• Correo: ${cotizacion.email}`,
+        `• Ciudad: ${cotizacion.ciudad}`,
+        '',
+        '🏠 *Datos del proyecto*',
+        `• Tipo: ${cotizacion.tipoProyecto}`,
+        `• Modalidad: ${cotizacion.modalidad}`,
+        `• Presupuesto: ${cotizacion.presupuesto}`,
+        `• Tiempo deseado: ${cotizacion.tiempoProyecto}`,
+        '',
+        '📝 *Descripción*',
+        cotizacion.descripcion,
+        '',
+        '📞 *Contacto preferido*',
+        cotizacion.contactoPreferido,
+        '',
+        '━━━━━━━━━━━━━━',
+        '_Enviado desde el formulario web_'
+    ].join('\n');
+}
+
+function abrirWhatsAppCotizacion(mensaje) {
+    // Abrir durante el clic, antes de cualquier espera, reduce los bloqueos de ventanas.
+    const url = 'https://wa.me/' + WHATSAPP_COTIZACION + '?text=' + encodeURIComponent(mensaje);
+    let ventana = null;
+    try {
+        ventana = window.open('about:blank', '_blank');
+        if (!ventana) return false;
+        ventana.opener = null;
+        ventana.location.replace(url);
+        return true;
+    } catch (error) {
+        try { if (ventana) ventana.close(); } catch (ignorado) { /* El enlace de respaldo sigue disponible. */ }
+        return false;
+    }
+}
+
+async function enviarCorreoCotizacion(cotizacion) {
+    const respuesta = await fetch(`https://formsubmit.co/ajax/${CORREO_COTIZACION}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        body: JSON.stringify({
+            _subject: `Cotización ${cotizacion.numero} — ${cotizacion.nombre}`,
+            numero_cotizacion: cotizacion.numero,
+            modalidad_contratacion: cotizacion.modalidad,
+            _template: 'table',
+            _captcha: 'false',
+            _honey: '',
+            _replyto: cotizacion.email,
+            nombre: cotizacion.nombre,
+            telefono: cotizacion.telefono,
+            correo: cotizacion.email,
+            ciudad: cotizacion.ciudad,
+            tipo_de_proyecto: cotizacion.tipoProyecto,
+            presupuesto: cotizacion.presupuesto,
+            tiempo_deseado: cotizacion.tiempoProyecto,
+            descripcion: cotizacion.descripcion,
+            contacto_preferido: cotizacion.contactoPreferido,
+            fecha: cotizacion.fecha
+        })
+    });
+
+    if (!respuesta.ok) {
+        throw new Error('No se pudo enviar el correo');
+    }
+
+    const resultado = await respuesta.json();
+    if (resultado.success !== true && resultado.success !== 'true') {
+        throw new Error(resultado.message || 'No se pudo enviar el correo');
+    }
+}
+
+async function manejarEnvioFormulario(event) {
+    event.preventDefault();
+    const formulario = event.target;
+    const btnEnviar = formulario.querySelector('.btn_enviar_formulario');
+    if (!btnEnviar || btnEnviar.disabled) return;
+    if (formulario.elements._honey && formulario.elements._honey.value.trim()) return;
+    const campos = formulario.querySelectorAll('input[required], select[required], textarea[required]');
+    let esValido = true;
+    campos.forEach((campo) => { if (!validarCampo({ target: campo })) esValido = false; });
+    if (!esValido) {
+        mostrarNotificacion('Por favor, completa todos los campos requeridos, incluida la modalidad de contratación.', 'error');
+        return;
+    }
+    let cotizacion;
+    try { cotizacion = recopilarDatosCotizacion(formulario); }
+    catch (error) {
+        mostrarNotificacion('No pudimos generar la referencia. Recarga la página e inténtalo de nuevo; si persiste, contáctanos directamente.', 'error');
+        return;
+    }
+    const mensajeWhatsApp = armarMensajeWhatsApp(cotizacion);
+    btnEnviar.classList.add('loading');
+    btnEnviar.disabled = true;
+    formulario.setAttribute('aria-busy', 'true');
+    const whatsappAbierto = abrirWhatsAppCotizacion(mensajeWhatsApp);
+    mostrarResultadoCotizacion(cotizacion, mensajeWhatsApp, 'Solicitud preparada. Estamos intentando enviarla por correo. En WhatsApp debes pulsar Enviar para completar el contacto.');
+    let correoEnviado = false;
+    try {
+        await enviarCorreoCotizacion(cotizacion);
+        correoEnviado = true;
+    } catch (error) {
+        correoEnviado = false;
+    } finally {
+        btnEnviar.classList.remove('loading');
+        btnEnviar.disabled = false;
+        formulario.removeAttribute('aria-busy');
+    }
+    let estado;
+    if (correoEnviado) {
+        formulario.reset();
+        estado = 'El servicio de correo confirmó la recepción de tu solicitud. ' + (whatsappAbierto ? 'WhatsApp se abrió con la misma referencia: pulsa Enviar en el chat.' : 'También puedes usar el enlace de abajo para enviarla por WhatsApp.');
+    } else {
+        // Mantener datos y número permite reintentar sin perder la solicitud.
+        estado = 'No pudimos confirmar el envío por correo. Conservamos tus datos y la misma referencia para reintentar. ' + (whatsappAbierto ? 'Pulsa Enviar en WhatsApp para completar el contacto.' : 'Usa el enlace de abajo para abrir WhatsApp y pulsa Enviar en el chat.');
+    }
+    mostrarResultadoCotizacion(cotizacion, mensajeWhatsApp, estado);
+    mostrarNotificacion('Cotización ' + cotizacion.numero + '. ' + estado, correoEnviado ? 'success' : 'error');
 }
 
 // Función para mostrar notificaciones
@@ -878,8 +1222,8 @@ function mostrarNotificacion(mensaje, tipo) {
         position: fixed;
         background: ${tipo === 'success' ? 'var(--clr-segundario)' : '#ff6b6b'};
         color: ${tipo === 'success' ? 'var(--clr-principal)' : 'white'};
-        padding: 2vh 3vh;
-        border-radius: 1vh;
+        padding: 0.9rem 1.2rem;
+        border-radius: 0.6rem;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         z-index: 10000;
         transform: translateX(100%);
@@ -897,14 +1241,14 @@ function mostrarNotificacion(mensaje, tipo) {
             transform: translateY(-100%);
             max-width: none;
             text-align: center;
-            font-size: 1.2vh;
+            font-size: 0.95rem;
         `;
     } else {
         estilosBase += `
             top: 20px;
             right: 20px;
-            max-width: 40vh;
-            font-size: 1.3vh;
+            max-width: 24rem;
+            font-size: 0.95rem;
         `;
     }
     
@@ -950,7 +1294,6 @@ function mostrarNotificacion(mensaje, tipo) {
 
 // Agregar inicialización del formulario a la función principal
 document.addEventListener('DOMContentLoaded', inicializarFormulario);
-}
 
 // Optimización del evento de scroll con throttling
 let isScrolling;
@@ -1461,8 +1804,8 @@ function mostrarNotificacionResena(mensaje, tipo) {
         position: fixed;
         background: ${tipo === 'success' ? 'var(--clr-segundario)' : '#ff6b6b'};
         color: ${tipo === 'success' ? 'var(--clr-principal)' : 'white'};
-        padding: 2vh 3vh;
-        border-radius: 1vh;
+        padding: 0.9rem 1.2rem;
+        border-radius: 0.6rem;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         z-index: 10000;
         transform: translateX(100%);
@@ -1479,14 +1822,14 @@ function mostrarNotificacionResena(mensaje, tipo) {
             transform: translateY(-100%);
             max-width: none;
             text-align: center;
-            font-size: 1.2vh;
+            font-size: 0.95rem;
         `;
     } else {
         estilosBase += `
             top: 20px;
             right: 20px;
-            max-width: 40vh;
-            font-size: 1.3vh;
+            max-width: 24rem;
+            font-size: 0.95rem;
         `;
     }
     
