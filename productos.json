@@ -1,0 +1,231 @@
+[
+  {
+    "id": "remodelacion_01",
+    "titulo": "Remodelación de Cocina Moderna",
+    "imagen": "./img/cocina-2.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "6.000.000 - 12.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-2.jpg",
+      "./img/cocina-1.jpg",
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales Utilizados",
+      "descripcion": "Esta remodelación incluye materiales de alta calidad seleccionados para garantizar durabilidad y elegancia.",
+      "materiales": [
+        "Granito natural para encimeras",
+        "Madera de roble para gabinetes",
+        "Acero inoxidable para electrodomésticos",
+        "Porcelanato de alta resistencia para pisos",
+        "Pintura epóxica para paredes"
+      ],
+      "tiempo_estimado": "4-6 semanas",
+      "garantia": "2 años"
+    }
+  },
+
+  {
+    "id": "remodelacion_02",
+    "titulo": "Cocina Integral Contemporánea",
+    "imagen": "./img/cocina-1.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "5.000.000 - 10.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-1.jpg",
+      "./img/cocina-2.jpg",
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg"
+    ],
+    "detalles": {
+      "titulo": "Especificaciones Técnicas",
+      "descripcion": "Cocina integral con diseño contemporáneo que combina funcionalidad y estilo moderno.",
+      "materiales": [
+        "Mármol Carrara para encimeras",
+        "MDF lacado para gabinetes",
+        "Aluminio anodizado para tiradores",
+        "Cerámica vitrificada para azulejos",
+        "Lámparas LED empotradas"
+      ],
+      "tiempo_estimado": "3-5 semanas",
+      "garantia": "3 años"
+    }
+  },
+  {
+    "id": "remodelacion_03",
+    "titulo": "Cocina Minimalista con Isla",
+    "imagen": "./img/cocina-3.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "7.000.000 - 13.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-3.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-5.jpg",
+      "./img/cocina-6.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales y Diseño",
+      "descripcion": "Cocina minimalista con isla central y acabados modernos.",
+      "materiales": [
+        "Cuarzo blanco para encimeras",
+        "Madera clara para gabinetes",
+        "Acero inoxidable para grifería",
+        "Porcelanato mate para pisos",
+        "Iluminación LED ambiental"
+      ],
+      "tiempo_estimado": "4-5 semanas",
+      "garantia": "2 años"
+    }
+  },
+  {
+    "id": "remodelacion_04",
+    "titulo": "Cocina Rústica Modernizada",
+    "imagen": "./img/cocina-4.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "6.500.000 - 11.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-4.jpg",
+      "./img/cocina-2.jpg",
+      "./img/cocina-1.jpg",
+      "./img/cocina-3.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales y Estilo",
+      "descripcion": "Remodelación de cocina con estilo rústico y toques modernos.",
+      "materiales": [
+        "Madera envejecida para gabinetes",
+        "Azulejos decorativos",
+        "Grifería de bronce",
+        "Piso de cerámica rústica",
+        "Iluminación cálida"
+      ],
+      "tiempo_estimado": "4-6 semanas",
+      "garantia": "2 años"
+    }
+  },
+  {
+    "id": "remodelacion_05",
+    "titulo": "Cocina Industrial Chic",
+    "imagen": "./img/cocina-5.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "7.000.000 - 13.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-5.jpg",
+      "./img/cocina-6.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-3.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales y Diseño",
+      "descripcion": "Cocina industrial con diseño contemporáneo que combina funcionalidad y estilo moderno.",
+      "materiales": [
+        "Acero inoxidable para encimeras",
+        "Madera de roble para gabinetes",
+        "Aluminio anodizado para grifería",
+        "Porcelanato de alta resistencia para pisos",
+        "Iluminación LED ambiental"
+      ],
+      "tiempo_estimado": "4-5 semanas",
+      "garantia": "2 años"
+    }
+  },
+  {
+    "id": "remodelacion_06",
+    "titulo": "Cocina Abierta al Comedor",
+    "imagen": "./img/cocina-6.jpg",
+    "categoria": {
+      "nombre": "Cocinas",
+      "id": "cocinas"
+    },
+    "precio_estimado": "7.000.000 - 13.000.000 COP",
+    "imagenes_detalle": [
+      "./img/cocina-6.jpg",
+      "./img/cocina-5.jpg",
+      "./img/cocina-4.jpg",
+      "./img/cocina-3.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales y Diseño",
+      "descripcion": "Cocina abierta al comedor con isla central y acabados modernos.",
+      "materiales": [
+        "Granito natural para encimeras",
+        "Madera de roble para gabinetes",
+        "Acero inoxidable para grifería",
+        "Porcelanato de alta resistencia para pisos",
+        "Iluminación LED ambiental"
+      ],
+      "tiempo_estimado": "4-5 semanas",
+      "garantia": "2 años"
+    }
+  },
+  {
+    "id": "remodelacion_07",
+    "titulo": "Baño Principal de Lujo",
+    "imagen": "./img/baño-1.jpg",
+    "categoria": {
+      "nombre": "Baños",
+      "id": "banos"
+    },
+    "precio_estimado": "8.000.000 - 15.000.000 COP",
+    "imagenes_detalle": [
+      "./img/baño-1.jpg",
+      "./img/baño-2.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales Premium",
+      "descripcion": "Baño de lujo con acabados premium y materiales de primera calidad para máxima durabilidad.",
+      "materiales": [
+        "Mármol travertino para paredes",
+        "Porcelana sanitaria de alta gama",
+        "Grifería de latón cepillado",
+        "Vidrio templado para ducha",
+        "Piso antideslizante de cerámica"
+      ],
+      "tiempo_estimado": "2-4 semanas",
+      "garantia": "5 años"
+    }
+  },
+  {
+    "id": "remodelacion_08",
+    "titulo": "Baño Secundario Moderno",
+    "imagen": "./img/baño-2.jpg",
+    "categoria": {
+      "nombre": "Baños",
+      "id": "banos"
+    },
+    "precio_estimado": "5.000.000 - 10.000.000 COP",
+    "imagenes_detalle": [
+      "./img/baño-2.jpg",
+      "./img/baño-1.jpg"
+    ],
+    "detalles": {
+      "titulo": "Materiales y Diseño",
+      "descripcion": "Baño moderno con diseño contemporáneo que combina funcionalidad y estilo moderno.",
+      "materiales": [
+        "Mármol Carrara para encimeras",
+        "MDF lacado para gabinetes",
+        "Aluminio anodizado para tiradores",
+        "Cerámica vitrificada para azulejos",
+        "Lámparas LED empotradas"
+      ],
+      "tiempo_estimado": "2-4 semanas",
+      "garantia": "3 años"
+    }
+  }
+]

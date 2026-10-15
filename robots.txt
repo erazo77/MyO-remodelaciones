@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://myo-remodelaciones.com/sitemap.xml
