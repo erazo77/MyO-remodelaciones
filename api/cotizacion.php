@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 // ===================== CONFIGURACIÓN =====================
 const MAIL_TO          = 'contacto@myo-remodelaciones.com';
-const MAIL_FROM        = 'no-reply@myo-remodelaciones.com'; // Debe ser un correo de TU dominio (mejora la entrega).
+const MAIL_FROM        = 'contacto@myo-remodelaciones.com'; // Debe coincidir con la cuenta SMTP de Hostinger.
 const MAIL_FROM_NAME   = 'M&O Remodelaciones y Acabados';
 const SITE_HOSTS       = ['myo-remodelaciones.com', 'www.myo-remodelaciones.com'];
 const DIGITOS          = 6;      // 000001
@@ -30,6 +30,29 @@ date_default_timezone_set('America/Bogota');
 const DIR_DATOS    = __DIR__ . '/data';
 const ARCHIVO_ESTADO = DIR_DATOS . '/contador.json';
 const ARCHIVO_LOG    = DIR_DATOS . '/solicitudes.jsonl';
+
+/**
+ * Carga la configuracion SMTP privada. El archivo config.local.php no se
+ * versiona ni se expone en el navegador; debe devolver un array con host,
+ * puerto, cifrado, usuario, clave y tiempo_espera.
+ */
+function configuracionSmtp(): array
+{
+    static $configuracion = null;
+    if ($configuracion !== null) {
+        return $configuracion;
+    }
+
+    $configuracion = [];
+    $archivo = __DIR__ . '/config.local.php';
+    if (is_file($archivo)) {
+        $cargada = require $archivo;
+        if (is_array($cargada)) {
+            $configuracion = $cargada;
+        }
+    }
+    return $configuracion;
+}
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -62,7 +85,12 @@ function limpiar($valor, int $max, bool $multilinea = false): string
 function asegurarCarpetaDatos(): void
 {
     if (!is_dir(DIR_DATOS)) {
-        @mkdir(DIR_DATOS, 0750, true);
+        if (!@mkdir(DIR_DATOS, 0775, true) && !is_dir(DIR_DATOS)) {
+            throw new RuntimeException('No se pudo crear la carpeta de datos.');
+        }
+    }
+    if (!is_writable(DIR_DATOS)) {
+        throw new RuntimeException('La carpeta de datos no tiene permiso de escritura.');
     }
     $ht = DIR_DATOS . '/.htaccess';
     if (!is_file($ht)) {
@@ -96,10 +124,14 @@ function conEstado(callable $fn)
             $estado['sal'] = bin2hex(random_bytes(8));
         }
         $resultado = $fn($estado);
-        ftruncate($fp, 0);
+        if (!ftruncate($fp, 0)) {
+            throw new RuntimeException('No se pudo actualizar el contador.');
+        }
         rewind($fp);
-        fwrite($fp, json_encode($estado, JSON_UNESCAPED_UNICODE));
-        fflush($fp);
+        $serializado = json_encode($estado, JSON_UNESCAPED_UNICODE);
+        if ($serializado === false || fwrite($fp, $serializado) === false || !fflush($fp)) {
+            throw new RuntimeException('No se pudo guardar el contador.');
+        }
         flock($fp, LOCK_UN);
         return $resultado;
     } finally {
@@ -184,6 +216,100 @@ function construirCorreo(string $numero, array $d): array
     return [$txt, $html];
 }
 
+function smtpRespuesta($conexion, array $esperados): void
+{
+    $respuesta = '';
+    while (!feof($conexion)) {
+        $linea = fgets($conexion, 1024);
+        if ($linea === false) {
+            break;
+        }
+        $respuesta .= $linea;
+        // Las respuestas SMTP de varias lineas usan un guion tras el codigo.
+        if (strlen($linea) < 4 || $linea[3] !== '-') {
+            break;
+        }
+    }
+    $codigo = (int) substr($respuesta, 0, 3);
+    if (!in_array($codigo, $esperados, true)) {
+        throw new RuntimeException('SMTP respondio ' . ($codigo ?: 'sin codigo') . '.');
+    }
+}
+
+function smtpComando($conexion, string $comando, array $esperados): void
+{
+    if (fwrite($conexion, $comando . "\r\n") === false) {
+        throw new RuntimeException('No se pudo escribir al servidor SMTP.');
+    }
+    smtpRespuesta($conexion, $esperados);
+}
+
+/** Envia por SMTP autenticado sin depender de Composer ni de una libreria externa. */
+function enviarCorreoSmtp(string $asuntoMime, string $cabeceras, string $cuerpo): bool
+{
+    $cfg = configuracionSmtp();
+    $host = trim((string) ($cfg['host'] ?? ''));
+    $usuario = trim((string) ($cfg['usuario'] ?? ''));
+    $clave = (string) ($cfg['clave'] ?? '');
+    if ($host === '' || $usuario === '' || $clave === '') {
+        return false;
+    }
+
+    $puerto = (int) ($cfg['puerto'] ?? 465);
+    $cifrado = strtolower((string) ($cfg['cifrado'] ?? 'ssl'));
+    $tiempoEspera = max(5, min(20, (int) ($cfg['tiempo_espera'] ?? 15)));
+    if ($puerto < 1 || $puerto > 65535 || !in_array($cifrado, ['ssl', 'tls', 'ninguno'], true)) {
+        throw new RuntimeException('Configuracion SMTP invalida.');
+    }
+
+    $destino = filter_var(MAIL_TO, FILTER_VALIDATE_EMAIL);
+    $remitente = filter_var(MAIL_FROM, FILTER_VALIDATE_EMAIL);
+    if ($destino === false || $remitente === false) {
+        throw new RuntimeException('Direccion de correo SMTP invalida.');
+    }
+
+    $servidor = ($cifrado === 'ssl' ? 'ssl://' : '') . $host . ':' . $puerto;
+    $conexion = @stream_socket_client($servidor, $errorNumero, $errorTexto, $tiempoEspera, STREAM_CLIENT_CONNECT);
+    if ($conexion === false) {
+        throw new RuntimeException('No se pudo conectar al servidor SMTP (' . $errorNumero . ').');
+    }
+
+    stream_set_timeout($conexion, $tiempoEspera);
+    try {
+        $saludo = preg_replace('/[^A-Za-z0-9.-]/', '', (string) ($_SERVER['HTTP_HOST'] ?? '')) ?: 'localhost';
+        smtpRespuesta($conexion, [220]);
+        smtpComando($conexion, 'EHLO ' . $saludo, [250]);
+        if ($cifrado === 'tls') {
+            smtpComando($conexion, 'STARTTLS', [220]);
+            if (!stream_socket_enable_crypto($conexion, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+                throw new RuntimeException('No se pudo activar TLS para SMTP.');
+            }
+            smtpComando($conexion, 'EHLO ' . $saludo, [250]);
+        }
+        smtpComando($conexion, 'AUTH LOGIN', [334]);
+        smtpComando($conexion, base64_encode($usuario), [334]);
+        smtpComando($conexion, base64_encode($clave), [235]);
+        smtpComando($conexion, 'MAIL FROM:<' . $remitente . '>', [250]);
+        smtpComando($conexion, 'RCPT TO:<' . $destino . '>', [250, 251]);
+        smtpComando($conexion, 'DATA', [354]);
+
+        $mensaje = 'To: <' . $destino . ">\r\n"
+            . 'Subject: ' . $asuntoMime . "\r\n"
+            . $cabeceras . "\r\n\r\n"
+            . $cuerpo;
+        // RFC 5321: las lineas que empiezan por punto se escapan durante DATA.
+        $mensaje = str_replace("\r\n.", "\r\n..", $mensaje);
+        if (fwrite($conexion, $mensaje . "\r\n.\r\n") === false) {
+            throw new RuntimeException('No se pudo enviar el contenido SMTP.');
+        }
+        smtpRespuesta($conexion, [250]);
+        smtpComando($conexion, 'QUIT', [221]);
+        return true;
+    } finally {
+        fclose($conexion);
+    }
+}
+
 function enviarCorreo(string $numero, array $d): bool
 {
     [$txt, $html] = construirCorreo($numero, $d);
@@ -208,6 +334,11 @@ function enviarCorreo(string $numero, array $d): bool
     $cuerpo .= "--{$limite}--\r\n";
 
     $cab = implode("\r\n", $cabeceras);
+    // SMTP autenticado es la opcion recomendada por Hostinger. Si config.local.php
+    // todavia no existe, se conserva mail() como alternativa temporal.
+    if (enviarCorreoSmtp($asuntoMime, $cab, $cuerpo)) {
+        return true;
+    }
     // -f fija el remitente de sobre (mejora SPF); algunos hosts lo bloquean, por eso hay un segundo intento.
     if (@mail(MAIL_TO, $asuntoMime, $cuerpo, $cab, '-f' . MAIL_FROM)) {
         return true;

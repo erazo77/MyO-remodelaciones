@@ -19,12 +19,20 @@
 
 ## Requisitos
 - Hosting con **PHP 7.4 o superior** (recomendado 8.x) y la función `mail()` habilitada (casi todos los hostings cPanel/Plesk la tienen).
-- La carpeta `api/data/` debe tener permiso de escritura para PHP (normalmente 755 o 775). El script la crea solo si no existe.
+- La carpeta `api/data/` debe tener permiso de escritura para PHP (normalmente **775**) y el archivo `api/data/contador.json` debe permitir escritura (normalmente **664**). Sube ambos, incluida la carpeta `data` y su `.htaccess`.
 
 ## Configuración (inicio de `api/cotizacion.php`)
 - `MAIL_TO`: destino de las cotizaciones (ya es contacto@myo-remodelaciones.com).
 - `MAIL_FROM`: remitente. **Debe ser una cuenta de tu dominio** (por ejemplo `no-reply@myo-remodelaciones.com` o la propia `contacto@`). Si los correos caen en spam, crea ese buzón en tu hosting y verifica que SPF/DKIM del dominio estén activos.
 - `LIMITE_POR_IP`: 5 solicitudes cada 10 minutos por IP (anti-spam).
+
+## SMTP recomendado en Hostinger
+
+1. En hPanel abre **Emails > Administrar > Connect Apps & Devices** de `contacto@myo-remodelaciones.com`.
+2. Copia `api/config.example.php` como `api/config.local.php` y coloca la contraseña de ese buzón. Este último archivo contiene un secreto: **no lo subas a Git**.
+3. Para Hostinger Email usa `smtp.hostinger.com`, puerto `465` y `ssl`. Si tu plan indica STARTTLS, usa puerto `587` y `tls`.
+
+El endpoint usa SMTP autenticado cuando existe esa configuración. Sin ella utiliza temporalmente `mail()`, pero Hostinger limita y desaconseja ese método para formularios de producción.
 
 ## Probar
 1. Abre la web, llena el formulario y envía.
