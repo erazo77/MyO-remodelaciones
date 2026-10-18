@@ -7414,3 +7414,632 @@ section { scroll-margin-top: calc(var(--header-h) + 0.5rem); }
 /* Permitir referencias largas en las notificaciones móviles. */
 .notificacion .notificacion-contenido { min-width: 0; }
 .notificacion .notificacion-contenido span { min-width: 0; overflow-wrap: anywhere; }
+
+/* =====================================================================
+   AJUSTES FINALES PARA MÓVIL
+   Estas reglas consolidan medidas que antes competían entre sí (vh, px y rem).
+   ===================================================================== */
+@media (max-width: 900px) {
+  :root { --espacio-barra-inferior: 4.75rem; }
+
+  html {
+    scroll-padding-top: calc(var(--header-h) + 0.75rem);
+    scroll-padding-bottom: var(--espacio-barra-inferior);
+  }
+
+  body { padding-bottom: var(--espacio-barra-inferior); }
+
+  /* Portafolio: tarjetas más respiradas y desplazamiento táctil predecible. */
+  .wrapper .carousel {
+    height: 30rem;
+    min-height: 30rem;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 0.5rem 0.75rem 0.75rem;
+    scroll-padding-inline: 0.75rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .producto {
+    width: min(18rem, calc(100vw - 3.5rem));
+    min-width: min(18rem, calc(100vw - 3.5rem));
+    max-width: min(18rem, calc(100vw - 3.5rem));
+  }
+
+  .producto img { height: clamp(17.5rem, 70vw, 20.5rem); }
+  .producto_titulo { margin-top: 2.25rem; }
+  .cont_controls { margin: 0.5rem 0 1.5rem; }
+
+  /* Al navegar al formulario, el título queda visible debajo del encabezado. */
+  #footer,
+  #reserva { scroll-margin-top: calc(var(--header-h) + 0.75rem); }
+
+  .cont_footer {
+    margin-top: 0;
+    padding-top: 1rem;
+    padding-bottom: calc(var(--espacio-barra-inferior) + 1rem);
+  }
+
+  .sub_cont_footer { gap: 1.25rem; }
+  .cont_formulario_footer { padding: 1.1rem; }
+  .formulario_header { margin-bottom: 1rem; }
+
+  /* Barra inferior: siempre anclada al ancho real de la pantalla. */
+  .bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    justify-content: initial;
+    align-items: stretch;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    min-height: var(--espacio-barra-inferior);
+    box-sizing: border-box;
+    padding: 0.4rem 0.25rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
+    border-radius: 0.9rem 0.9rem 0 0;
+    animation: none;
+    transition: transform 0.2s ease;
+  }
+
+  .bottom-nav.is-hidden {
+    transform: translateY(calc(100% + env(safe-area-inset-bottom, 0px)));
+  }
+
+  .nav-item {
+    min-width: 0;
+    min-height: 3.5rem;
+    overflow: hidden;
+    padding: 0.3rem 0.15rem;
+    gap: 0.22rem;
+    border-radius: 0.7rem;
+  }
+
+  .nav-item i { flex: 0 0 auto; margin: 0; font-size: 1.1rem; }
+  .nav-item span {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: clamp(0.55rem, 2.45vw, 0.68rem);
+    line-height: 1.1;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-item.active { box-shadow: none; }
+}
+
+@media (max-width: 420px) {
+  .wrapper .carousel {
+    height: 28rem;
+    min-height: 28rem;
+    padding-inline: 0.5rem;
+  }
+
+  .producto {
+    width: min(17rem, calc(100vw - 2.5rem));
+    min-width: min(17rem, calc(100vw - 2.5rem));
+    max-width: min(17rem, calc(100vw - 2.5rem));
+  }
+
+  .producto img { height: 18rem; }
+  .bottom-nav { padding-inline: 0.1rem; }
+}
+
+/* Cotización rápida: el servicio principal aparece junto a la primera llamada a la acción. */
+.cotizacion_rapida {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(178, 149, 107, 0.32);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(178, 149, 107, 0.18), rgba(23, 23, 23, 0.16));
+  box-shadow: 0 1.25rem 2.5rem -2rem rgba(0, 0, 0, 0.85);
+}
+
+.cotizacion_rapida_intro { max-width: 40rem; margin-bottom: 1.25rem; }
+.cotizacion_rapida_intro span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--clr-segundario);
+  font: 700 0.75rem/1.3 "Manrope", system-ui, sans-serif;
+  letter-spacing: 0.14em;
+}
+.cotizacion_rapida_intro h2 {
+  margin: 0;
+  color: var(--clr-titulos);
+  font: 600 clamp(1.7rem, 1.2rem + 1.8vw, 2.5rem)/1.1 "Cormorant Garamond", Georgia, serif;
+}
+.cotizacion_rapida_intro p {
+  margin: 0.75rem 0 0;
+  color: var(--clr-parrafos);
+  line-height: 1.6;
+}
+.cotizacion_rapida_destino .cont_formulario_footer { width: 100%; }
+
+.sub_cont_footer.solo-contacto { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 1025px) {
+  .contenedor_landing {
+    grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .cotizacion_rapida {
+    display: block;
+    margin-top: 1.25rem;
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  }
+
+  .cotizacion_rapida_intro {
+    max-width: 36rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .cotizacion_rapida_destino .cont_formulario_footer {
+    max-width: none;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .cotizacion_rapida { margin-top: 1rem; padding: 1rem; }
+  .cotizacion_rapida .cont_formulario_footer { padding: 1rem; }
+}
+
+/* Cotización rápida: vidrio neutro, sin tintes dorados. */
+.cotizacion_rapida {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top-width: 1px;
+  background: rgba(25, 25, 25, 0.5);
+  box-shadow: 0 1.5rem 3.5rem -2rem rgba(0, 0, 0, 0.82), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+.cotizacion_rapida::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.cotizacion_rapida_intro,
+.cotizacion_rapida_destino { position: relative; z-index: 1; }
+.cotizacion_rapida_intro span { color: #f5f2ed; }
+.cotizacion_rapida_intro h2 { color: #ffffff; }
+.cotizacion_rapida_intro p { color: #e7e7e7; }
+
+.cotizacion_rapida .cont_formulario_footer {
+  background: rgba(18, 18, 18, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  box-shadow: 0 1rem 2rem -1.5rem rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(110%);
+}
+.cotizacion_rapida .form_input,
+.cotizacion_rapida .form_select,
+.cotizacion_rapida .form_textarea {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.cotizacion_rapida .form_input:hover,
+.cotizacion_rapida .form_select:hover,
+.cotizacion_rapida .form_textarea:hover { border-color: rgba(255, 255, 255, 0.5); }
+.cotizacion_rapida .form_input:focus,
+.cotizacion_rapida .form_select:focus,
+.cotizacion_rapida .form_textarea:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #f5f2ed;
+  box-shadow: 0 0 0 0.2rem rgba(245, 242, 237, 0.16);
+}
+.cotizacion_rapida .cotizacion_referencia,
+.cotizacion_rapida .form_checkbox_group .form_checkbox {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.cotizacion_rapida .form_checkbox_group .form_checkbox:has(input:checked) {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #f5f2ed;
+}
+
+@media (max-width: 900px) {
+  .cotizacion_rapida::before { width: 55%; opacity: 0.55; }
+}
+
+/* Embudo móvil: propuesta de valor, acción principal y formulario, en ese orden. */
+@media (max-width: 900px) {
+  .contenedor_landing {
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .cont_one { gap: 0.9rem; }
+  .titulo_landing { max-width: 16ch; }
+  .parrafo_slogan_inicio { max-width: 42rem; }
+
+  .conte_botones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.35rem;
+  }
+
+  .conte_botones a {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.9rem;
+    padding: 0.7rem 0.55rem;
+    font-size: 0.88rem;
+  }
+
+  .conte_botones a[href="#reserva"] {
+    order: -1;
+    grid-column: 1 / -1;
+    min-height: 3.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .cotizacion_rapida {
+    margin-top: 0.35rem;
+    padding: 1.1rem;
+  }
+
+  .cotizacion_rapida_intro { margin-bottom: 0.9rem; }
+  .cotizacion_rapida_intro span { margin-bottom: 0.35rem; font-size: 0.68rem; }
+  .cotizacion_rapida_intro h2 { font-size: clamp(1.65rem, 7vw, 2.15rem); }
+  .cotizacion_rapida_intro p { margin-top: 0.55rem; font-size: 0.92rem; }
+
+  /* El bloque exterior ya explica la oferta; evitamos repetir el mismo título. */
+  .cotizacion_rapida .formulario_header { display: none; }
+  .cotizacion_rapida .cont_formulario_footer { padding: 1rem; }
+  .cotizacion_rapida .formulario_contacto { gap: 0.9rem; }
+
+  .cotizacion_rapida #formularioContacto .cotizacion_referencia {
+    margin-bottom: 0.75rem;
+    padding: 0.65rem 0.75rem;
+  }
+  .cotizacion_rapida .cotizacion_referencia small { display: none; }
+  .cotizacion_rapida .form_progreso { margin-bottom: 1rem; }
+  .cotizacion_rapida .form_paso { gap: 0.9rem; }
+  .cotizacion_rapida .form_nav { margin-top: 1rem; }
+  .cotizacion_rapida .btn_form_siguiente,
+  .cotizacion_rapida .btn_enviar_formulario { min-height: 3.25rem; }
+
+  /* Servicios y portafolio quedan después de la acción principal. */
+  .contenedot_lista {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+}
+
+@media (max-width: 420px) {
+  .conte_botones { grid-template-columns: 1fr; }
+  .conte_botones a { min-height: 2.75rem; }
+  .cotizacion_rapida { padding: 0.85rem; }
+  .cotizacion_rapida .cont_formulario_footer { padding: 0.85rem; }
+  .cotizacion_rapida .form_progreso { gap: 0.45rem; }
+}
+
+/* Composición compacta: cada bloque móvil tiene una función y un único contenedor visual. */
+@media (max-width: 900px) {
+  .contenedor_landing {
+    display: block;
+    width: min(100%, 42rem);
+    padding-inline: max(1rem, var(--gutter));
+  }
+
+  .cont_one {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .logo { align-self: center; }
+  .titulo_landing,
+  .parrafo_slogan_inicio,
+  .titulo_slogan { width: 100%; }
+
+  .conte_botones,
+  .cotizacion_rapida,
+  .contenedot_lista { box-sizing: border-box; }
+
+  /* La cabecera y los campos viven dentro del mismo vidrio, sin tarjetas anidadas. */
+  .cotizacion_rapida {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    border-radius: 0.9rem;
+  }
+  .cotizacion_rapida::before { display: none; }
+  .cotizacion_rapida_intro {
+    margin: 0;
+    padding: 1.2rem 1.15rem 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .cotizacion_rapida_destino { width: 100%; }
+  .cotizacion_rapida .cont_formulario_footer {
+    padding: 1rem 1.15rem 1.15rem;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .contenedot_lista {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  .contenedot_lista ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+  .elemento {
+    min-height: 3rem;
+    padding: 0.6rem;
+    font-size: 0.88rem;
+    line-height: 1.3;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .bi-check-circle { width: 1.15rem; margin-right: 0.35rem; }
+}
+
+@media (max-width: 420px) {
+  .contenedot_lista ul { grid-template-columns: 1fr; }
+  .cotizacion_rapida_intro { padding: 1rem 0.95rem 0.85rem; }
+  .cotizacion_rapida .cont_formulario_footer { padding: 0.85rem 0.95rem 1rem; }
+}
+
+/* Cierre móvil: contacto y beneficios se leen como dos bloques ordenados. */
+@media (max-width: 900px) {
+  #footer .cont_footer {
+    width: min(100%, 42rem);
+    padding-top: 2rem;
+  }
+
+  .sub_cont_footer.solo-contacto { display: block; }
+  .cont_info_contacto {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .info_header {
+    padding: 0 0.25rem;
+    text-align: left;
+  }
+  .titulo_footer { margin-bottom: 0.45rem; }
+  .slogan_footer { margin: 0; font-size: 0.95rem; }
+
+  .cont_lista_datos,
+  .beneficios_contacto {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.85rem;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
+
+  .cont_lista_datos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0.9rem;
+    row-gap: 0.9rem;
+    padding: 1rem;
+  }
+  .imagen_tarjeta_contacto {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    align-self: start;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    background: #f5f2ed;
+  }
+  .titulo_contacto_footer {
+    align-self: start;
+    font-size: 1.3rem;
+  }
+  .lista_datos_contacto,
+  .redes_sociales_footer { grid-column: 1 / -1; }
+  .lista_datos_contacto { gap: 0.65rem; }
+  .lista_datos_contacto .item_datos { font-size: 0.9rem; gap: 0.65rem; }
+  .redes_sociales_footer {
+    justify-content: flex-start;
+    gap: 0.65rem;
+    margin-top: 0;
+    padding-top: 0.85rem;
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .beneficios_contacto { padding: 1rem; }
+  .titulo_beneficios { margin: 0 0 0.8rem; text-align: left; }
+  .lista_beneficios { display: grid; gap: 0.55rem; }
+  .lista_beneficios li {
+    min-height: 2.85rem;
+    margin: 0;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.6rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 420px) {
+  .cont_lista_datos { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* =====================================================================
+   Modo claro: superficies opacas y contraste estable.
+   Evita que los filtros de vidrio del modo oscuro resten definición a
+   textos, formularios e imágenes.
+   ===================================================================== */
+body.active_fondo { background: #fbfaf8; }
+
+.contenedor_padre.active_fondo {
+  --clr-principal: #fbfaf8;
+  --clr-titulos: #1b1a18;
+  --clr-parrafos: #37332e;
+  --clr-borde: rgba(58, 49, 39, 0.2);
+  --clr-terciario: #705735;
+  color: #37332e;
+}
+
+.contenedor_padre.active_fondo .conte_encabezado {
+  background: #ffffff;
+  backdrop-filter: none;
+  box-shadow: 0 0.35rem 1.1rem rgba(35, 29, 22, 0.1);
+}
+
+.contenedor_padre.active_fondo .slogan_principal_galeria,
+.contenedor_padre.active_fondo .comparacion_item,
+.contenedor_padre.active_fondo .item_comentario,
+.contenedor_padre.active_fondo .seccion_reseña .cont_reseñas_usuario,
+.contenedor_padre.active_fondo .cont_reseñas_lista li {
+  color: #37332e;
+  background: #ffffff;
+  border-color: rgba(58, 49, 39, 0.16);
+  box-shadow: 0 0.6rem 1.5rem rgba(35, 29, 22, 0.08);
+  backdrop-filter: none;
+}
+
+.contenedor_padre.active_fondo .cont_lef_comentarios {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.88)), url(./img/fondo_comentarios.webp);
+  background-blend-mode: normal;
+  backdrop-filter: none;
+  box-shadow: 0 0.6rem 1.5rem rgba(35, 29, 22, 0.08);
+}
+
+.contenedor_padre.active_fondo .cont_lef_comentarios::before { display: none; }
+
+.contenedor_padre.active_fondo .slogan_cometarios,
+.contenedor_padre.active_fondo .comentario_texto,
+.contenedor_padre.active_fondo .form_label_reseña,
+.contenedor_padre.active_fondo .reseña_autor,
+.contenedor_padre.active_fondo .reseña_texto {
+  color: #37332e;
+}
+
+.contenedor_padre.active_fondo .form_input_reseña,
+.contenedor_padre.active_fondo .form_textarea_reseña {
+  color: #1b1a18;
+  background: #ffffff;
+  border-color: rgba(58, 49, 39, 0.28);
+  backdrop-filter: none;
+}
+
+.contenedor_padre.active_fondo .form_input_reseña::placeholder,
+.contenedor_padre.active_fondo .form_textarea_reseña::placeholder,
+.contenedor_padre.active_fondo .reseña_fecha,
+.contenedor_padre.active_fondo .sin_reseñas {
+  color: rgba(55, 51, 46, 0.68);
+}
+
+.contenedor_padre.active_fondo .cotizacion_rapida {
+  background: #ffffff;
+  border-color: rgba(58, 49, 39, 0.18);
+  box-shadow: 0 0.75rem 1.75rem rgba(35, 29, 22, 0.09);
+  backdrop-filter: none;
+}
+
+.contenedor_padre.active_fondo .cotizacion_rapida::before { display: none; }
+
+.contenedor_padre.active_fondo .cotizacion_rapida_intro span,
+.contenedor_padre.active_fondo .cotizacion_rapida_intro h2,
+.contenedor_padre.active_fondo .cotizacion_rapida_intro p {
+  color: #1b1a18;
+}
+
+.contenedor_padre.active_fondo .cotizacion_rapida .cont_formulario_footer {
+  background: transparent;
+  border-color: rgba(58, 49, 39, 0.16);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.contenedor_padre.active_fondo .form_input:focus,
+.contenedor_padre.active_fondo .form_select:focus,
+.contenedor_padre.active_fondo .form_textarea:focus,
+.contenedor_padre.active_fondo .form_input_reseÃ±a:focus,
+.contenedor_padre.active_fondo .form_textarea_reseÃ±a:focus {
+  color: #1b1a18;
+  background: #ffffff;
+  border-color: #705735;
+  box-shadow: 0 0 0 0.2rem rgba(112, 87, 53, 0.16);
+}
+
+.contenedor_padre.active_fondo .form_select option {
+  color: #1b1a18;
+  background: #ffffff;
+}
+
+.contenedor_padre.active_fondo :is(.boton_contacto, .cont_boton_acerca) {
+  color: #1b1a18;
+  background: #b2956b;
+  border-color: #8f7048;
+  box-shadow: 0 0.45rem 1rem rgba(70, 53, 32, 0.16);
+}
+
+.contenedor_padre.active_fondo .seccion_propuesta {
+  --clr-titulos: #1b1a18;
+  --clr-parrafos: #37332e;
+}
+
+.contenedor_padre.active_fondo .cont_left_acerca {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.86)), url(./img/fondo_acerca.png);
+}
+
+.contenedor_padre.active_fondo :is(.cont_etiqueta_acerca, .cont_etiqueta_acerca_twow) {
+  background: #ffffff;
+  border-color: rgba(58, 49, 39, 0.16);
+  box-shadow: 0 0.6rem 1.5rem rgba(35, 29, 22, 0.08);
+}
+
+.contenedor_padre.active_fondo :is(.parrafo_etiqueta_acerca, .parrafo_etiqueta_acercartwow) {
+  color: #37332e;
+  background: transparent;
+}
+
+.contenedor_padre.active_fondo .contenedor_parrafo_cubo .parrafo_cubo1,
+.contenedor_padre.active_fondo .contenedor_parrafo_cubo .parrafo_cubo2,
+.contenedor_padre.active_fondo .contenedor_parrafo_cubo .parrafo_cubo3 {
+  color: #37332e;
+  background: #ffffff;
+  box-shadow: 0 0.35rem 0.9rem rgba(35, 29, 22, 0.08);
+}
+
+.contenedor_padre.active_fondo :is(.img_acerca_twow, .img_acerca_twownext, .img_acerca_twownextwow) {
+  filter: none;
+  -webkit-filter: none;
+}
+
+@media (max-width: 900px) {
+  .contenedor_padre.active_fondo .nav-menu.active {
+    background: #ffffff;
+    backdrop-filter: none;
+    box-shadow: -0.5rem 0 1.5rem rgba(35, 29, 22, 0.12);
+  }
+
+  .contenedor_padre.active_fondo .nav-menu.active :is(.cont_inicio_landing, .acerca_de_landing, .comentarios, .galeria, .contacto) {
+    color: #1b1a18;
+    background: #f7f4ef;
+    border-color: rgba(58, 49, 39, 0.16);
+  }
+}

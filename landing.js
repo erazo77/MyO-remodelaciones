@@ -5,6 +5,16 @@ const titulo_principal = document.querySelector(".titulo_principal");
 let botonesAgregar = document.querySelectorAll(".producto_agregar");
 const numerito = document.querySelector("#numerito");
 
+// La cotización es el principal punto de conversión: se muestra junto al inicio,
+// pero se conserva el mismo formulario y el mismo id para no romper enlaces ni envíos.
+const destinoCotizacionRapida = document.querySelector(".cotizacion_rapida_destino");
+const bloqueCotizacion = document.getElementById("reserva");
+if (destinoCotizacionRapida && bloqueCotizacion) {
+  const contenedorOriginal = bloqueCotizacion.parentElement;
+  destinoCotizacionRapida.append(bloqueCotizacion);
+  contenedorOriginal?.classList.add("solo-contacto");
+}
+
 /**+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 //*////////////////////// push cambio de fondo//////////////////////// *//
@@ -1435,11 +1445,10 @@ function inicializarNavegacionInferior() {
         const currentScroll = window.pageYOffset;
         
         // Mostrar/ocultar menú según la dirección del scroll
-        if (currentScroll > lastScroll && currentScroll > 100) {
-            bottomNav.style.transform = 'translate(-50%, 100%)';
-        } else {
-            bottomNav.style.transform = 'translate(-50%, 0)';
-        }
+        bottomNav.classList.toggle(
+            'is-hidden',
+            currentScroll > lastScroll && currentScroll > 100
+        );
         
         lastScroll = currentScroll;
         updateActiveNavItem();
